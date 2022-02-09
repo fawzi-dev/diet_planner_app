@@ -1,3 +1,4 @@
+import 'package:diet_planner_app/login_page/login_screen.dart';
 import 'package:diet_planner_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,7 @@ void main() {
   runApp(
     const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen()
+      home: LoginHomePage()
     ),
   );
 }

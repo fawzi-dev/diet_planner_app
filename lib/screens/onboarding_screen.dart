@@ -88,108 +88,110 @@ class OnBoardinig extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Image holder in onbaording screen
-        SizedBox(
-          height: deviceScreenHeight(context) * 0.65,
-          width: deviceScreenWidth(context),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.elliptical(150, 40),
-              bottomRight: Radius.elliptical(150, 40),
-            ),
-            child: Image.asset(
-              imgUrl,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            height: deviceScreenHeight(context) * 0.32,
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Image holder in onbaording screen
+          SizedBox(
+            height: deviceScreenHeight(context) * 0.65,
             width: deviceScreenWidth(context),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Indicator(
-                        pageNumber: 0,
-                        selectedPage: selectedPage,
-                      ),
-                      Indicator(
-                        pageNumber: 1,
-                        selectedPage: selectedPage,
-                      ),
-                      Indicator(
-                        pageNumber: 2,
-                        selectedPage: selectedPage,
-                      )
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text(
-                      'Best tips for your diet',
-                      style: onboardtextStyle,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Text(
-                      textDesc,
-                      style: onboardSubtextStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30.0, vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Skip this step',
-                          style: skipStyle,
-                        ),
-                        selectedPage == 2
-                            ? GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (ctx) => const LoginHomePage(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  height: 40,
-                                  width: 80,
-                                  child: const Center(
-                                      child: Text(
-                                    'Next',
-                                    style: buttonStyle,
-                                  )),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: statusBar),
-                                ),
-                              )
-                            : Container()
-                      ],
-                    ),
-                  )
-                ],
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.elliptical(150, 40),
+                bottomRight: Radius.elliptical(150, 40),
+              ),
+              child: Image.asset(
+                imgUrl,
+                fit: BoxFit.cover,
               ),
             ),
           ),
-        )
-      ],
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              height: deviceScreenHeight(context) * 0.32,
+              width: deviceScreenWidth(context),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Indicator(
+                          pageNumber: 0,
+                          selectedPage: selectedPage,
+                        ),
+                        Indicator(
+                          pageNumber: 1,
+                          selectedPage: selectedPage,
+                        ),
+                        Indicator(
+                          pageNumber: 2,
+                          selectedPage: selectedPage,
+                        )
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(
+                        'Best tips for your diet',
+                        style: onboardtextStyle,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Text(
+                        textDesc,
+                        style: onboardSubtextStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30.0, vertical: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Skip this step',
+                            style: skipStyle,
+                          ),
+                          selectedPage == 2
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (ctx) => const LoginHomePage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 80,
+                                    child: const Center(
+                                        child: Text(
+                                      'Next',
+                                      style: buttonStyle,
+                                    )),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: statusBar),
+                                  ),
+                                )
+                              : Container()
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -208,7 +210,7 @@ class Indicator extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 3.0),
       child: Container(
         height: 7,
-        width: 7,
+        width:  selectedPage == pageNumber?12:7,
         decoration: BoxDecoration(
           color: selectedPage == pageNumber
               ? Colors.green

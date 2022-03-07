@@ -1,8 +1,8 @@
-class MealsTime {
+class MealsWidget {
   final String title;
   final String subtitle;
   final String imgPath;
 
-  MealsTime(
+  MealsWidget(
       {required this.title, required this.subtitle, required this.imgPath});
 }

@@ -14,29 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<MealsTime> mealTime = [
-    MealsTime(
-        title: 'Breakfast',
-        subtitle: '283 kCal',
-        imgPath: 'assets/meals/breakfast.svg'),
-    MealsTime(
-        title: 'Snack',
-        subtitle: '183 kCal',
-        imgPath: 'assets/meals/snack1.svg'),
-    MealsTime(
-        title: 'Lunch',
-        subtitle: '583 kCal',
-        imgPath: 'assets/meals/lunch.svg'),
-    MealsTime(
-        title: 'Snack',
-        subtitle: '383 kCal',
-        imgPath: 'assets/meals/snack2.svg'),
-    MealsTime(
-        title: 'Dinner',
-        subtitle: '383 kCal',
-        imgPath: 'assets/meals/dinner.svg'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,35 +26,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Flexible(
-                        child: SfRadialGauge(axes: [
-                          RadialAxis(
-                            showTicks: false,
-                            minimum: 0,
-                            maximum: 2008.7,
-                            showLabels: false,
-                            startAngle: 180,
-                            endAngle: 0,
-                            radiusFactor: 1.2,
-                            canScaleToFit: true,
-                            axisLineStyle: const AxisLineStyle(
-                              thickness: 0.05,
-                              color: Colors.white24,
-                              thicknessUnit: GaugeSizeUnit.factor,
-                              cornerStyle: CornerStyle.startCurve,
-                            ),
-                            pointers: const <GaugePointer>[
-                              RangePointer(
-                                  color: Colors.white,
-                                  value: 1007.0,
-                                  width: 0.05,
-                                  sizeUnit: GaugeSizeUnit.factor,
-                                  cornerStyle: CornerStyle.bothCurve)
-                            ],
+                      SfRadialGauge(axes: [
+                        RadialAxis(
+                          showTicks: false,
+                          minimum: 0,
+                          maximum: 2008.7,
+                          showLabels: false,
+                          startAngle: 180,
+                          endAngle: 0,
+                          radiusFactor: 1.2,
+                          canScaleToFit: true,
+                          axisLineStyle: const AxisLineStyle(
+                            thickness: 0.05,
+                            color: Colors.white24,
+                            thicknessUnit: GaugeSizeUnit.factor,
+                            cornerStyle: CornerStyle.startCurve,
                           ),
-                        ]),
-                      ),
-                      const Text('1739.8',style: gaugeLabel,)
+                          pointers: const <GaugePointer>[
+                            RangePointer(
+                                color: Colors.white,
+                                value: 1739.8,
+                                width: 0.05,
+                                sizeUnit: GaugeSizeUnit.factor,
+                                cornerStyle: CornerStyle.bothCurve)
+                          ],
+                        ),
+                      ]),
+                      const Text(
+                        '1739.8 kCal',
+                        style: gaugeLabel,
+                      )
                     ],
                   ),
                   height: constraints.maxHeight * 0.3,
@@ -122,66 +100,36 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: constraints.maxHeight * 0.05),
                       SizedBox(
                         height: constraints.maxHeight * 0.55,
-                        child: ListView.builder(
+                        child: ListView(
                           physics: const BouncingScrollPhysics(),
-                          itemCount: mealTime.length,
-                          itemBuilder: (ctx, index) => Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 4.0, vertical: 8),
-                            child: Container(
-                              height: constraints.maxHeight * 0.2,
-                              width: constraints.maxWidth,
-                              decoration: BoxDecoration(
-                                color: mealsBoxes,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              constraints.maxWidth * 0.05,
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SvgPicture.asset(
-                                              mealTime[index].imgPath,
-                                            ),
-                                            SizedBox(
-                                              height:
-                                                  constraints.maxHeight * 0.01,
-                                            ),
-                                            Text(
-                                              mealTime[index].title,
-                                              style: mealTitle,
-                                            ),
-                                            Text(
-                                              mealTime[index].subtitle,
-                                              style: mealSub,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        color: Colors.blueAccent,
-                                        height: 60,
-                                        width: 60,
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
+                          children: [
+                            MealsWidget(
+                              constraints: constraints,
+                              title: 'Breakfast',
+                              subtitle: 283,
+                              imgPath: 'assets/meals/breakfast.svg',
                             ),
-                          ),
+                            MealsWidget(
+                                constraints: constraints,
+                                title: 'Snack',
+                                subtitle: 183,
+                                imgPath: 'assets/meals/snack1.svg'),
+                            MealsWidget(
+                                constraints: constraints,
+                                title: 'Lunch',
+                                subtitle: 583,
+                                imgPath: 'assets/meals/lunch.svg'),
+                            MealsWidget(
+                                constraints: constraints,
+                                title: 'Snack',
+                                subtitle: 383,
+                                imgPath: 'assets/meals/snack2.svg'),
+                            MealsWidget(
+                                constraints: constraints,
+                                title: 'Dinner',
+                                subtitle: 383,
+                                imgPath: 'assets/meals/dinner.svg'),
+                          ],
                         ),
                       ),
                     ],
@@ -190,6 +138,83 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class MealsWidget extends StatelessWidget {
+  const MealsWidget({
+    Key? key,
+    required this.constraints,
+    required this.title,
+    required this.imgPath,
+    required this.subtitle,
+  }) : super(key: key);
+
+  final BoxConstraints constraints;
+  final String title;
+  final String imgPath;
+  final double subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
+      child: Container(
+        height: constraints.maxHeight * 0.2,
+        width: constraints.maxWidth,
+        decoration: BoxDecoration(
+          color: mealsBoxes,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth * 0.05,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SvgPicture.asset(
+                        imgPath,
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.01,
+                      ),
+                      Text(
+                        title,
+                        style: mealTitle,
+                      ),
+                      Text(
+                        '$subtitle kCal',
+                        style: mealSub,
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 12.0,bottom:12.0),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: CircleAvatar(
+                      backgroundColor:mealBoxAddButtonColor,
+                      child: IconButton(
+                        icon: SvgPicture.asset('assets/icon_plus.svg'),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );

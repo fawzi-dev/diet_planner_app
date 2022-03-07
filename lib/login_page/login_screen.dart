@@ -50,20 +50,21 @@ class _LoginItemsState extends State<LoginItems> {
 
   @override
   Widget build(BuildContext context) {
+    print('The value of boolean is : ' + obscuredText.toString());
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.green.shade100.withOpacity(0.3),
       body: Center(
         child: LayoutBuilder(
-          builder: (ctx,constraints)=> Container(
+          builder: (ctx, constraints) => Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             height: deviceScreenHeight(context) * .6,
             width: deviceScreenWidth(context) * 9,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const Flexible(
-                  child:  Text(
+                  child: Text(
                     'Welcome',
                     style: welcomeText,
                   ),
@@ -83,6 +84,7 @@ class _LoginItemsState extends State<LoginItems> {
                   iconColor: Colors.grey,
                   onTap: () {
                     setState(() {
+                      // true = false
                       obscuredText = !obscuredText;
                     });
                   },
@@ -92,22 +94,23 @@ class _LoginItemsState extends State<LoginItems> {
                 Row(
                   children: [
                     Expanded(
-                      child: ClipRRect(
-                        child: InkWell(
-                          onTap: () {},
-                          splashColor: Colors.white54,
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              color: loginButton,
-                              borderRadius: BorderRadius.circular(constraints.maxHeight * 0.02),
-                            ),
-                            height: constraints.maxHeight * 0.095,
-                            child: const Center(
-                              child: FittedBox(
-                                child: Text(
-                                  'Login',
-                                  style: loginText,
-                                ),
+                      child: InkWell(
+                        borderRadius:
+                            BorderRadius.circular(constraints.maxHeight * 0.02),
+                        onTap: () {},
+                        splashColor: Colors.white54,
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            color: loginButton,
+                            borderRadius: BorderRadius.circular(
+                                constraints.maxHeight * 0.02),
+                          ),
+                          height: constraints.maxHeight * 0.095,
+                          child: const Center(
+                            child: FittedBox(
+                              child: Text(
+                                'Login',
+                                style: loginText,
                               ),
                             ),
                           ),
@@ -184,18 +187,19 @@ class OtherSignInOption extends StatelessWidget {
         height: deviceScreenHeight(context) * .07,
         width: deviceScreenWidth(context) * .2,
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(
-              radius,
-            ),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black26.withOpacity(0.01),
-                  offset: const Offset(0, 02),
-                  blurRadius: 15,
-                  spreadRadius: 10)
-            ]),
-        child: SvgPicture.asset(imgUrl,alignment: Alignment.center),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            radius,
+          ),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black26.withOpacity(0.01),
+                offset: const Offset(0, 02),
+                blurRadius: 15,
+                spreadRadius: 10)
+          ],
+        ),
+        child: SvgPicture.asset(imgUrl, alignment: Alignment.center),
       ),
     );
   }
@@ -223,9 +227,7 @@ class TextInputs extends StatefulWidget {
   State<TextInputs> createState() => _TextInputsState();
 }
 
-class _TextInputsState extends State<TextInputs>
-    with SingleTickerProviderStateMixin {
-
+class _TextInputsState extends State<TextInputs> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation animation;
 
@@ -238,6 +240,7 @@ class _TextInputsState extends State<TextInputs>
         duration: const Duration(milliseconds: 800),
         lowerBound: 0.0,
         upperBound: 1.0);
+
     animation = CurvedAnimation(parent: animationController, curve: Curves.decelerate);
   }
 
@@ -247,7 +250,6 @@ class _TextInputsState extends State<TextInputs>
     super.dispose();
     animationController.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -284,14 +286,13 @@ class _TextInputsState extends State<TextInputs>
                     if (theText.length > 5) {
                       setState(() {
                         animationController.forward();
-                        animationController.addListener(() { });
+                        animationController.addListener(() {});
                       });
-                    }
-                    else if(theText.isEmpty){
-                     setState(() {
-                       animationController.reset();
-                       animationController.addListener(() { });
-                     });
+                    } else if (theText.isEmpty) {
+                      setState(() {
+                        animationController.reset();
+                        animationController.addListener(() {});
+                      });
                     }
                   },
                 ),
@@ -309,10 +310,13 @@ class _TextInputsState extends State<TextInputs>
                       height: 20,
                       width: widget.icon == Icons.check ? 20 : 25,
                       padding: const EdgeInsets.all(2),
-                      color: widget.isOn ? iconCheck.withOpacity(animation.value) : Colors.transparent,
+                      color: widget.isOn
+                          ? iconCheck.withOpacity(animation.value)
+                          : Colors.transparent,
                       child: Icon(
                         widget.icon,
                         color: widget.iconColor,
+                        /// Check = 14 || eyes = 18
                         size: widget.icon == Icons.check ? 14 : 18,
                       ),
                     ),

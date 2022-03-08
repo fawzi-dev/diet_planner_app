@@ -1,10 +1,12 @@
-import 'package:diet_planner_app/assets/colors.dart';
-import 'package:diet_planner_app/assets/text_styles.dart';
+import 'package:diet_planner_app/constants/colors.dart';
+import 'package:diet_planner_app/constants/text_styles.dart';
 import 'package:diet_planner_app/meal_times.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+
+import '../constants/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ]),
                       const Text(
-                        '1739.8 kCal',
+                        '1739.8 \n kCal left',
                         style: gaugeLabel,
                       )
                     ],

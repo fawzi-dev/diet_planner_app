@@ -1,10 +1,10 @@
 import 'package:diet_planner_app/login_page/login_screen.dart';
+import 'package:diet_planner_app/screens/IntroPage.dart';
 import 'package:diet_planner_app/screens/home_screen.dart';
-import 'package:diet_planner_app/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'assets/colors.dart';
+import 'constants/colors.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -12,7 +12,11 @@ void main() {
         statusBarColor: statusBar, systemNavigationBarColor: statusBar),
   );
   runApp(
-    const MaterialApp(debugShowCheckedModeBanner: false, home: HomeMain()),
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomeMain(),
+      theme: ThemeData(colorSchemeSeed: statusBar),
+    ),
   );
 }
 
@@ -31,9 +35,13 @@ class _HomeMainState extends State<HomeMain> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    animateToPageMethod(page);
+  }
+
+  animateToPageMethod(int index) {
     if (pageController.hasClients) {
       pageController.animateToPage(
-        page,
+        index,
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
@@ -46,10 +54,9 @@ class _HomeMainState extends State<HomeMain> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: statusBar,
-        onTap: (currentPage){
-         setState(() {
-            page=currentPage;
-         });
+        onTap: (currentPage) {
+          animateToPageMethod(currentPage);
+          setState(() {});
         },
         currentIndex: page,
         items: [
@@ -77,9 +84,8 @@ class _HomeMainState extends State<HomeMain> {
       ),
       body: PageView(
         onPageChanged: (selectedPage) {
-         setState(() {
-            page = selectedPage;
-         });
+          page = selectedPage;
+          setState(() {});
         },
         scrollDirection: Axis.horizontal,
         controller: pageController,

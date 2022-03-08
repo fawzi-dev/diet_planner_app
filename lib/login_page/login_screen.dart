@@ -1,6 +1,6 @@
-import 'package:diet_planner_app/assets/colors.dart';
-import 'package:diet_planner_app/assets/screen_size.dart';
-import 'package:diet_planner_app/assets/text_styles.dart';
+import 'package:diet_planner_app/constants/colors.dart';
+import 'package:diet_planner_app/constants/screen_size.dart';
+import 'package:diet_planner_app/constants/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -29,7 +29,7 @@ class BackGround extends StatelessWidget {
         decoration: const BoxDecoration(
           color: bgColor,
           image: DecorationImage(
-            image: AssetImage('assets/bg.png'),
+            image: AssetImage('constants/bg.png'),
             fit: BoxFit.fill,
           ),
         ),
@@ -124,13 +124,13 @@ class _LoginItemsState extends State<LoginItems> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     OtherSignInOption(
-                      imgUrl: 'assets/face.svg',
+                      imgUrl: 'constants/face.svg',
                     ),
                     const SizedBox(
                       width: 25,
                     ),
                     OtherSignInOption(
-                      imgUrl: 'assets/google.svg',
+                      imgUrl: 'constants/google.svg',
                     )
                   ],
                 )

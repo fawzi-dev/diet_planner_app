@@ -1,10 +1,12 @@
-import 'package:diet_planner_app/login_page/login_screen.dart';
-import 'package:diet_planner_app/screens/IntroPage.dart';
+import 'package:diet_planner_app/models/daily_plans_models.dart';
+import 'package:diet_planner_app/screens/first_page.dart';
+import 'package:diet_planner_app/screens/get_users_dietplan.dart';
 import 'package:diet_planner_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'constants/colors.dart';
+import 'models/api_calls.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -14,7 +16,7 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeMain(),
+      home: const FirstPage(),
       theme: ThemeData(colorSchemeSeed: statusBar),
     ),
   );
@@ -33,6 +35,7 @@ class _HomeMainState extends State<HomeMain> {
 
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     super.initState();
     animateToPageMethod(page);
@@ -48,6 +51,19 @@ class _HomeMainState extends State<HomeMain> {
     }
   }
 
+  void mealPlans() async {
+    DailyPlans dailyPlans =
+        await ApiService.instance.generateMealPlan(targetCalories: 3000);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => UserDietPlan(
+          dailyPlans: dailyPlans,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     debugPrint(page.toString());
@@ -57,6 +73,7 @@ class _HomeMainState extends State<HomeMain> {
         onTap: (currentPage) {
           animateToPageMethod(currentPage);
           setState(() {});
+          mealPlans();
         },
         currentIndex: page,
         items: [
@@ -90,7 +107,6 @@ class _HomeMainState extends State<HomeMain> {
         scrollDirection: Axis.horizontal,
         controller: pageController,
         children: const [
-          HomeScreen(),
           HomeScreen(),
         ],
       ),

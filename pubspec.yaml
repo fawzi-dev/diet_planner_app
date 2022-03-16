@@ -40,6 +40,11 @@ dependencies:
   ai_progress: ^2.0.0
   syncfusion_flutter_gauges: ^19.4.47
   shared_preferences: ^2.0.13
+  http: ^0.13.4
+  numberpicker: ^2.1.1
+
+
+
 
 
 
@@ -76,6 +81,7 @@ flutter:
      - assets/meals/
      - assets/navIcon/
      - assets/images/
+     - assets/emojis/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

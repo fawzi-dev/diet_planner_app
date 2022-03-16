@@ -1,6 +1,5 @@
 import 'package:diet_planner_app/constants/colors.dart';
 import 'package:diet_planner_app/constants/text_styles.dart';
-import 'package:diet_planner_app/meal_times.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -88,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             DateFormat('EE , dd MMM')
-                                .format(DateTime.now())
+                                .format(
+                                  DateTime.now(),
+                                )
                                 .toString(),
                             style: dateAndTime,
                           ),
@@ -192,11 +193,11 @@ class MealsWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 12.0,bottom:12.0),
+                  padding: const EdgeInsets.only(right: 12.0, bottom: 12.0),
                   child: Align(
                     alignment: Alignment.topRight,
                     child: CircleAvatar(
-                      backgroundColor:mealBoxAddButtonColor,
+                      backgroundColor: mealBoxAddButtonColor,
                       child: IconButton(
                         icon: SvgPicture.asset('assets/icon_plus.svg'),
                         onPressed: () {},

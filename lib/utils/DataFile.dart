@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../models/DietModel.dart';
 import '../models/IntroModel.dart';
 
 class DataFile {
@@ -33,6 +34,8 @@ class DataFile {
     return introList;
   }
 
+
+  
   static getMealList() {
     List<DietModel> list = [];
 

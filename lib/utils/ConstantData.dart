@@ -2,12 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'SizeConfig.dart';
 
-Color lightPink = Color(0xFFFBE8EA);
+Color lightPink = const Color(0xFFFBE8EA);
 
-Color primaryColor = "#0A776B".toColor();
+Color primaryColor = "#32a83e".toColor();
 // Color primaryColor = "#288E2E".toColor();
 // Color primaryColor = "#2EA34A".toColor();
 Color primaryDarkColor = "#117328".toColor();
@@ -22,13 +21,12 @@ Color subTextColor = "#1E1F1F".toColor();
 var gradientColors =
     LinearGradient(colors: [primaryColor, "#F65375".toColor()]);
 
-
 class ConstantData {
   static String fontFamily = "OpenSans";
   // static String fontFamily = "SFProText";
   static String boldFontFamily = "MerriweatherSans";
-  static String assetsPath = "assets/images/";
-  static final formatter = new NumberFormat("#.##");
+  static String assetsPath = "assets/emojis/";
+  static final formatter = NumberFormat("#.##");
 
   static const double avatarRadius = 40;
   static const double padding = 20;
@@ -48,13 +46,13 @@ double feetAndInchToCm(double feet, double inch) {
   return meter * 100;
 }
 
- double kgToPound(double kg) {
-return kg * 2.205;
+double kgToPound(double kg) {
+  return kg * 2.205;
 // return (total * percent) / 100;
 }
 
- double poundToKg(double kg) {
-return kg / 2.205;
+double poundToKg(double kg) {
+  return kg / 2.205;
 // return (total * percent) / 100;
 }
 
@@ -70,19 +68,19 @@ void meterToInchAndFeet(double cm, TextEditingController ftController,
   ftController.text = n.round().toString();
   inchController.text = in2.round().toString();
 }
+
 Color getColorFromHex(String colors) {
   var color = "0xFF$colors";
   try {
     return Color(int.parse(color));
   } catch (e) {
-    print(e);
-    return Color(0xFFFFFFFF);
+    return const Color(0xFFFFFFFF);
   }
 }
 
 extension ColorExtension on String {
   toColor() {
-    var hexColor = this.replaceAll("#", "");
+    var hexColor = replaceAll("#", "");
     if (hexColor.length == 6) {
       hexColor = "FF" + hexColor;
     }

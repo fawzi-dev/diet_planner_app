@@ -113,19 +113,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             MealsWidget(
                                 constraints: constraints,
-                                title: 'Snack',
-                                subtitle: 183,
-                                imgPath: 'assets/meals/snack1.svg'),
-                            MealsWidget(
-                                constraints: constraints,
                                 title: 'Lunch',
                                 subtitle: 583,
                                 imgPath: 'assets/meals/lunch.svg'),
-                            MealsWidget(
-                                constraints: constraints,
-                                title: 'Snack',
-                                subtitle: 383,
-                                imgPath: 'assets/meals/snack2.svg'),
                             MealsWidget(
                                 constraints: constraints,
                                 title: 'Dinner',

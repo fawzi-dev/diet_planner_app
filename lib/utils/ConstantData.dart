@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'PrefData.dart';
 import 'SizeConfig.dart';
 
 Color lightPink = Color(0xFFFBE8EA);
@@ -34,35 +33,11 @@ class ConstantData {
   static const double avatarRadius = 40;
   static const double padding = 20;
 
-
   static double font18Px = SizeConfig.safeBlockVertical! / 0.5;
   static double font22Px = SizeConfig.safeBlockVertical! / 0.4;
   static double font25Px = SizeConfig.safeBlockVertical! / 0.3;
-
-  static String privacyPolicy = "https://google.com";
-
   static String dateFormat = "EEE ,MMM dd,yyyy";
   static String timeFormat = "hh:mm aa";
-
-  // static setThemePosition() async {
-  //   int themMode = await PrefData.getThemeMode();
-
-  //   if (themMode == 1) {
-  //     textColor = Colors.white;
-  //     backgroundColor = "#14181E".toColor();
-  //     viewColor = Colors.white54;
-  //     cellColor = "#202029".toColor();
-  //     disableIconColor = Colors.white54;
-  //     subTextColor = Colors.white54;
-  //   } else {
-  //     textColor = "#121212".toColor();
-  //     backgroundColor = "#EDEBEC".toColor();
-  //     viewColor = "#CCCCCC".toColor();
-  //     cellColor = "#ffffff".toColor();
-  //     disableIconColor = Colors.grey;
-  //     subTextColor = Colors.grey.shade700;
-  //   }
-  // }
 }
 
 double feetAndInchToCm(double feet, double inch) {
@@ -82,7 +57,6 @@ return kg * 2.205;
 return kg / 2.205;
 // return (total * percent) / 100;
 }
-
 
 void meterToInchAndFeet(double cm, TextEditingController ftController,
     TextEditingController inchController) {

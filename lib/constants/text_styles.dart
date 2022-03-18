@@ -43,8 +43,20 @@ const mealSub = TextStyle(
 );
 
 const gaugeLabel = TextStyle(
-    fontSize: 38,
+    fontSize: 58,
     fontFamily: 'Roboto-Bold',
     color: Colors.white,
+);
+
+ TextStyle gaugeLabelSub = TextStyle(
+    fontSize: 20,
+    fontFamily: 'Roboto-Reg',
+    color: Colors.white.withOpacity(0.5),
+);
+
+TextStyle theThreeLabels = TextStyle(
+    fontSize: 14,
+    fontFamily: 'Roboto-Reg',
+    color: Colors.white.withOpacity(0.9),
 );
 

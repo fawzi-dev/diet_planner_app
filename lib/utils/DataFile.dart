@@ -34,8 +34,6 @@ class DataFile {
     return introList;
   }
 
-
-  
   static getMealList() {
     List<DietModel> list = [];
 
@@ -108,52 +106,37 @@ class DataFile {
     return list;
   }
 
-  static getMotivateList() {
+  static increaseWeightGoal() {
     List<DietModel> list = [];
 
     DietModel model = DietModel();
-    model.title = "Feeling confident";
-    model.subTitle = "I want to be more confident in myself";
-    model.image = "imoji_11.png";
+    model.title = "0.5";
     list.add(model);
 
     model = DietModel();
-    model.title = "Being noticed";
-    model.subTitle = "I want to be repected,appreciated and loved";
-    model.image = "imoji_12.png";
+    model.title = "1.0";
     list.add(model);
 
     model = DietModel();
-    model.title = "Being Active";
-    model.image = "imoji_13.png";
-    model.subTitle = "I want to feel energetic,fit and healthy";
+    model.title = "1.5";
     list.add(model);
 
     model = DietModel();
-    model.title = "Gaining muscle";
-    model.subTitle = "I want to be and look stronger";
-    model.image = "imoji_14.png";
+    model.title = "2.0";
     list.add(model);
 
     return list;
   }
 
-  static getVariedList() {
+  static getUsersPreferences() {
     List<DietModel> list = [];
 
     DietModel model = DietModel();
-    model.title = "Low Variety";
-    model.subTitle = "Meals frequently repeated";
+    model.title = "I want to gain weight";
     list.add(model);
 
     model = DietModel();
-    model.title = "Medium Variety";
-    model.subTitle = "Meals repeated from time to time";
-    list.add(model);
-
-    model = DietModel();
-    model.title = "High Variety";
-    model.subTitle = "Meals rarely repeated";
+    model.title = "I want to lose weight";
     list.add(model);
 
     return list;

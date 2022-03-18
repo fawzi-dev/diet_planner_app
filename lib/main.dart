@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'constants/colors.dart';
 import 'models/api_calls.dart';
+import 'package:provider/provider.dart';
+
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(

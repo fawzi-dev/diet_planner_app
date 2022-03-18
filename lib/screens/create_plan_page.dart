@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:diet_planner_app/models/api_calls.dart';
+import 'package:diet_planner_app/models/daily_plans_models.dart';
 import 'package:diet_planner_app/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,9 @@ import '../utils/ConstantWidget.dart';
 import '../utils/SizeConfig.dart';
 
 class CreatePlanPage extends StatefulWidget {
+  final int? bmr;
+
+  const CreatePlanPage({Key? key, this.bmr}) : super(key: key);
   @override
   _CreatePlanPage createState() {
     return _CreatePlanPage();
@@ -25,11 +30,12 @@ class _CreatePlanPage extends State<CreatePlanPage> {
       SystemNavigator.pop();
     }
 
-    return new Future.value(false);
+    return Future.value(false);
   }
 
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     super.initState();
   }
@@ -39,6 +45,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
     SizeConfig().init(context);
 
     double progressHeight = getWidthPercentSize(context, 50);
+    double headerHeight = getWidthPercentSize(context, 35);
 
     return WillPopScope(
         child: Scaffold(
@@ -46,7 +53,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
           appBar: AppBar(
             backgroundColor: cellColor,
             elevation: 0,
-            title: Text(""),
+            title: const Text(""),
             leading: IconButton(
               icon: Icon(
                 Icons.keyboard_backspace_sharp,
@@ -55,32 +62,41 @@ class _CreatePlanPage extends State<CreatePlanPage> {
               onPressed: _requestPop,
             ),
           ),
-          body: Container(
+          body: SizedBox(
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: headerHeight,
+                  child: getTextWidget('Your BMR is ${widget.bmr} kCal',
+                      textColor, TextAlign.center, FontWeight.w600, 28),
+                ),
                 TweenAnimationBuilder<double>(
                   tween: Tween<double>(begin: 0.0, end: 1),
-                  duration: const Duration(milliseconds: 5000),
-                  onEnd: () {
+                  duration: const Duration(seconds: 10),
+                  onEnd: () async {
+                    DailyPlans dailyPlans = await ApiService.instance
+                        .generateMealPlan(targetCalories: widget.bmr!);
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            HomeScreen(dailyPlans: dailyPlans),
+                      ),
+                    );
                   },
                   builder: (context, value, _) {
                     double val = (value * 100 / 10) * 10;
-                    var f = new NumberFormat("###.##", "en_US");
+                    var f = NumberFormat("###.##", "en_US");
 
-                    return Container(
+                    return SizedBox(
                       height: progressHeight,
                       width: progressHeight,
                       child: Stack(
                         children: [
-                          Container(
+                          SizedBox(
                             height: progressHeight,
                             width: progressHeight,
                             child: CircularProgressIndicator(
@@ -98,7 +114,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 getTextWidget(
-                                    f.format(val).toString() + " %",
+                                    f.format(val.round()).toString() + " %",
                                     textColor,
                                     TextAlign.center,
                                     FontWeight.bold,
@@ -133,4 +149,3 @@ class _CreatePlanPage extends State<CreatePlanPage> {
         onWillPop: _requestPop);
   }
 }
-

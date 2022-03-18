@@ -42,6 +42,9 @@ dependencies:
   shared_preferences: ^2.0.13
   http: ^0.13.4
   numberpicker: ^2.1.1
+  font_awesome_flutter: ^9.2.0
+  provider: ^5.0.0
+
 
 
 

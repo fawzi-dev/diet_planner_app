@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'SizeConfig.dart';
+import 'size_config.dart';
 
 Color lightPink = const Color(0xFFFBE8EA);
 
@@ -38,36 +38,6 @@ class ConstantData {
   static String timeFormat = "hh:mm aa";
 }
 
-double feetAndInchToCm(double feet, double inch) {
-  double meter;
-  double f1 = (feet / 3.281);
-  double i1 = (inch / 39.37);
-  meter = f1 + i1;
-  return meter * 100;
-}
-
-double kgToPound(double kg) {
-  return kg * 2.205;
-// return (total * percent) / 100;
-}
-
-double poundToKg(double kg) {
-  return kg / 2.205;
-// return (total * percent) / 100;
-}
-
-void meterToInchAndFeet(double cm, TextEditingController ftController,
-    TextEditingController inchController) {
-  double meter = cm / 100;
-  double inch = (meter * 39.37);
-  double ft1 = inch / 12;
-  int n = ft1.toInt();
-  double in1 = ft1 - n;
-  double in2;
-  in2 = in1 * 12;
-  ftController.text = n.round().toString();
-  inchController.text = in2.round().toString();
-}
 
 Color getColorFromHex(String colors) {
   var color = "0xFF$colors";

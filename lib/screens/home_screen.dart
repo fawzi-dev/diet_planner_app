@@ -1,10 +1,13 @@
 import 'package:diet_planner_app/constants/colors.dart';
 import 'package:diet_planner_app/constants/text_styles.dart';
 import 'package:diet_planner_app/models/daily_plans_models.dart';
+import 'package:diet_planner_app/screens/meals_ingridents.dart';
+import 'package:diet_planner_app/utils/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../constants/colors.dart';
+import 'edit_profile_page.dart';
 
 List<double> trackCalorie = [
   0.0,
@@ -16,6 +19,12 @@ List<double> trackCalorie = [
   0.0,
 ];
 
+class MealsTime {
+  MealsTime({this.breakfast = true, this.dinner = true, this.lunch = true});
+  bool? breakfast;
+  bool? lunch;
+  bool? dinner;
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, this.dailyPlans}) : super(key: key);
@@ -27,6 +36,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  PageController pageController = PageController();
+  int page = 0;
+
   @override
   void initState() {
     super.initState();
@@ -138,6 +150,26 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: statusBar,
+        onTap: (currentPage) async {
+          animateToPageMethod(currentPage);
+          setState(() {});
+        },
+        currentIndex: page,
+        items: [
+          BottomNavigationBarItem(
+              activeIcon: SvgPicture.asset('assets/navIcon/a-home.svg',
+                  color: statusBar),
+              icon: SvgPicture.asset('assets/navIcon/home.svg'),
+              label: 'Home'),
+          BottomNavigationBarItem(
+              activeIcon: SvgPicture.asset('assets/navIcon/a-profile.svg',
+                  color: statusBar),
+              icon: SvgPicture.asset('assets/navIcon/profile.svg'),
+              label: 'Profile')
+        ],
+      ),
       body: SafeArea(
         child: PageView(
           onPageChanged: (selectedPage) {
@@ -196,12 +228,12 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
             children: [
               Container(
                 child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        SfRadialGauge(axes: [
-                          RadialAxis(
-                            showTicks: false,
-                            minimum: 0,
+                  children: [
+                    SfRadialGauge(
+                      axes: [
+                        RadialAxis(
+                          showTicks: false,
+                          minimum: 0,
                           maximum: widget.calories[index],
                           showLabels: false,
                           startAngle: 180,
@@ -316,7 +348,7 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                                 ),
                               );
                             },
-                                onTap: () {
+                            onTap: () {
                               if (widget.mealsTime[index].breakfast == true) {
                                 trackCalorie[index] +=
                                     (widget.calories[index] / 3);
@@ -391,8 +423,6 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                 ),
               )
             ],
-              ),
-            ),
           ),
         ),
       ),

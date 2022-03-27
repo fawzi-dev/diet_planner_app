@@ -29,7 +29,7 @@ class BackGround extends StatelessWidget {
         decoration: const BoxDecoration(
           color: bgColor,
           image: DecorationImage(
-            image: AssetImage('constants/bg.png'),
+            image: AssetImage('assets/bg.png'),
             fit: BoxFit.fill,
           ),
         ),
@@ -50,7 +50,7 @@ class _LoginItemsState extends State<LoginItems> {
 
   @override
   Widget build(BuildContext context) {
-    print('The value of boolean is : ' + obscuredText.toString());
+    // print('The value of boolean is : ' + obscuredText.toString());
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.green.shade100.withOpacity(0.3),
@@ -61,7 +61,7 @@ class _LoginItemsState extends State<LoginItems> {
             height: deviceScreenHeight(context) * .6,
             width: deviceScreenWidth(context) * 9,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Flexible(
                   child: Text(
@@ -69,6 +69,7 @@ class _LoginItemsState extends State<LoginItems> {
                     style: welcomeText,
                   ),
                 ),
+                SizedBox(height: constraints.maxHeight * 0.05),
                 // TextInputs(
                 //   title: 'Username',
                 //   icon: Icons.check,
@@ -124,13 +125,13 @@ class _LoginItemsState extends State<LoginItems> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     OtherSignInOption(
-                      imgUrl: 'constants/face.svg',
+                      imgUrl: 'assets/face.svg',
                     ),
                     const SizedBox(
                       width: 25,
                     ),
                     OtherSignInOption(
-                      imgUrl: 'constants/google.svg',
+                      imgUrl: 'assets/google.svg',
                     )
                   ],
                 )
@@ -174,7 +175,7 @@ class OtherSignInOption extends StatelessWidget {
   }) : super(key: key);
 
   final String imgUrl;
-  double radius = 7;
+  double radius =20;
 
   @override
   Widget build(BuildContext context) {
@@ -183,13 +184,13 @@ class OtherSignInOption extends StatelessWidget {
       borderRadius: BorderRadius.circular(radius),
       onTap: () {},
       child: Ink(
-        padding: const EdgeInsets.all(15),
-        height: deviceScreenHeight(context) * .07,
-        width: deviceScreenWidth(context) * .2,
+        padding: const EdgeInsets.all(20),
+        height: deviceScreenHeight(context) * .1,
+        width: deviceScreenWidth(context) * .3,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(
-            radius,
+             radius,
           ),
           boxShadow: [
             BoxShadow(
@@ -205,128 +206,130 @@ class OtherSignInOption extends StatelessWidget {
   }
 }
 
-class TextInputs extends StatefulWidget {
-  const TextInputs({
-    Key? key,
-    required this.title,
-    required this.icon,
-    required this.isOn,
-    required this.iconColor,
-    required this.onTap,
-    required this.obscureText,
-  }) : super(key: key);
 
-  final String title;
-  final IconData icon;
-  final bool isOn;
-  final Color iconColor;
-  final VoidCallback onTap;
-  final bool obscureText;
 
-  @override
-  State<TextInputs> createState() => _TextInputsState();
-}
+// class TextInputs extends StatefulWidget {
+//   const TextInputs({
+//     Key? key,
+//     required this.title,
+//     required this.icon,
+//     required this.isOn,
+//     required this.iconColor,
+//     required this.onTap,
+//     required this.obscureText,
+//   }) : super(key: key);
 
-class _TextInputsState extends State<TextInputs> with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation animation;
+//   final String title;
+//   final IconData icon;
+//   final bool isOn;
+//   final Color iconColor;
+//   final VoidCallback onTap;
+//   final bool obscureText;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    animationController = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 800),
-        lowerBound: 0.0,
-        upperBound: 1.0);
+//   @override
+//   State<TextInputs> createState() => _TextInputsState();
+// }
 
-    animation = CurvedAnimation(parent: animationController, curve: Curves.decelerate);
-  }
+// class _TextInputsState extends State<TextInputs> with SingleTickerProviderStateMixin {
+//   late AnimationController animationController;
+//   late Animation animation;
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    animationController.dispose();
-  }
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//     animationController = AnimationController(
+//         vsync: this,
+//         duration: const Duration(milliseconds: 800),
+//         lowerBound: 0.0,
+//         upperBound: 1.0);
 
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      shadowColor: Colors.blueAccent.withOpacity(0.1),
-      elevation: 2.5,
-      borderRadius: BorderRadius.circular(10),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Container(
-          color: Colors.white,
-          height: deviceScreenHeight(context) * 0.08,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            children: [
-              Flexible(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: widget.title,
-                    hintStyle: hintText,
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none),
-                    contentPadding: const EdgeInsets.only(left: 10, bottom: 2),
-                  ),
-                  cursorColor: Colors.green,
-                  style: inputText,
-                  textAlign: TextAlign.left,
-                  cursorHeight: 25,
-                  obscureText: widget.obscureText,
-                  onChanged: (theText) {
-                    if (theText.length > 5) {
-                      setState(() {
-                        animationController.forward();
-                        animationController.addListener(() {});
-                      });
-                    } else if (theText.isEmpty) {
-                      setState(() {
-                        animationController.reset();
-                        animationController.addListener(() {});
-                      });
-                    }
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 12.0),
-                child: GestureDetector(
-                  onTap: widget.onTap,
-                  child: ClipRRect(
-                    borderRadius: widget.icon == Icons.check
-                        ? BorderRadius.circular(60)
-                        : BorderRadius.circular(0.0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 20,
-                      width: widget.icon == Icons.check ? 20 : 25,
-                      padding: const EdgeInsets.all(2),
-                      color: widget.isOn
-                          ? iconCheck.withOpacity(animation.value)
-                          : Colors.transparent,
-                      child: Icon(
-                        widget.icon,
-                        color: widget.iconColor,
-                        /// Check = 14 || eyes = 18
-                        size: widget.icon == Icons.check ? 14 : 18,
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+//     animation = CurvedAnimation(parent: animationController, curve: Curves.decelerate);
+//   }
+
+//   @override
+//   void dispose() {
+//     // TODO: implement dispose
+//     super.dispose();
+//     animationController.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Material(
+//       shadowColor: Colors.blueAccent.withOpacity(0.1),
+//       elevation: 2.5,
+//       borderRadius: BorderRadius.circular(10),
+//       child: ClipRRect(
+//         borderRadius: BorderRadius.circular(8),
+//         child: Container(
+//           color: Colors.white,
+//           height: deviceScreenHeight(context) * 0.08,
+//           padding: const EdgeInsets.symmetric(horizontal: 10),
+//           child: Row(
+//             children: [
+//               Flexible(
+//                 child: TextField(
+//                   decoration: InputDecoration(
+//                     hintText: widget.title,
+//                     hintStyle: hintText,
+//                     fillColor: Colors.white,
+//                     filled: true,
+//                     border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(10),
+//                         borderSide: BorderSide.none),
+//                     contentPadding: const EdgeInsets.only(left: 10, bottom: 2),
+//                   ),
+//                   cursorColor: Colors.green,
+//                   style: inputText,
+//                   textAlign: TextAlign.left,
+//                   cursorHeight: 25,
+//                   obscureText: widget.obscureText,
+//                   onChanged: (theText) {
+//                     if (theText.length > 5) {
+//                       setState(() {
+//                         animationController.forward();
+//                         animationController.addListener(() {});
+//                       });
+//                     } else if (theText.isEmpty) {
+//                       setState(() {
+//                         animationController.reset();
+//                         animationController.addListener(() {});
+//                       });
+//                     }
+//                   },
+//                 ),
+//               ),
+//               Padding(
+//                 padding: const EdgeInsets.only(right: 12.0),
+//                 child: GestureDetector(
+//                   onTap: widget.onTap,
+//                   child: ClipRRect(
+//                     borderRadius: widget.icon == Icons.check
+//                         ? BorderRadius.circular(60)
+//                         : BorderRadius.circular(0.0),
+//                     child: Container(
+//                       alignment: Alignment.center,
+//                       height: 20,
+//                       width: widget.icon == Icons.check ? 20 : 25,
+//                       padding: const EdgeInsets.all(2),
+//                       color: widget.isOn
+//                           ? iconCheck.withOpacity(animation.value)
+//                           : Colors.transparent,
+//                       child: Icon(
+//                         widget.icon,
+//                         color: widget.iconColor,
+//                         /// Check = 14 || eyes = 18
+//                         size: widget.icon == Icons.check ? 14 : 18,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

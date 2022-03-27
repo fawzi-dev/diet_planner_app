@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../models/DietModel.dart';
-import '../models/IntroModel.dart';
+import '../models/diet_model.dart';
+import '../models/intro_model.dart';
 
 class DataFile {
   static List<IntroModel> getIntroModel(BuildContext context) {

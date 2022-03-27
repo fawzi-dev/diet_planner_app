@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:diet_planner_app/models/api_calls.dart';
 import 'package:diet_planner_app/screens/create_plan_page.dart';
-import 'package:diet_planner_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -150,6 +148,9 @@ class _FirstPage extends State<FirstPage> {
                         // final BMR results
                         double finalBmr = 0.0;
 
+                        PrefData().addHeight(cm.toDouble());
+                        PrefData().addWeight(kg1);
+
                         if (_genderPosition == 0) {
                           //tagret calorie
                           targetCalorie = (10 * currentWeight) +
@@ -177,6 +178,9 @@ class _FirstPage extends State<FirstPage> {
                             finalBmr = targetCalorie - (kg2 * 500);
                           }
                         }
+
+                        PrefData().addCalories(finalBmr);
+                        PrefData.setIsCreatePlan(false);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -472,7 +476,7 @@ class _FirstPage extends State<FirstPage> {
       ),
       onChanged: (value) {
         if (types == 'cm') {
-          cm = value.isNotEmpty?int.parse(value):0;
+          cm = value.isNotEmpty ? int.parse(value) : 0;
         } else if (types == 'kg1') {
           kg1 = value.isNotEmpty ? double.parse(value) : 0;
         } else if (types == 'kg2') {

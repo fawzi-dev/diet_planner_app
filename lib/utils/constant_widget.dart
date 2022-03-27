@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'ConstantData.dart';
+import 'constant_data.dart';
 
 double getPercentSize(double total, double percent) {
   return (total * percent) / 100;
@@ -307,48 +307,6 @@ Widget getDefaultTextFiledWidget(BuildContext context, String s,
   );
 }
 
-Widget getPasswordTextFiled(BuildContext context, String s,
-    TextEditingController textEditingController) {
-  double height = getScreenPercentSize(context, 8.5);
-  double radius = getPercentSize(height, 20);
-  double fontSize = getPercentSize(height, 25);
-
-  return Container(
-      height: height,
-      alignment: Alignment.centerLeft,
-      margin:
-          EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
-      decoration: BoxDecoration(
-        color: cellColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(radius),
-        ),
-      ),
-      child: TextField(
-        maxLines: 1,
-        obscureText: true,
-        controller: textEditingController,
-        style: TextStyle(
-            fontFamily: ConstantData.fontFamily,
-            color: textColor,
-            fontWeight: FontWeight.w400,
-            fontSize: fontSize),
-        decoration: InputDecoration(
-            contentPadding:
-                EdgeInsets.only(left: getWidthPercentSize(context, 2)),
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            hintText: s,
-            hintStyle: TextStyle(
-                fontFamily: ConstantData.fontFamily,
-                color: textColor,
-                fontWeight: FontWeight.w400,
-                fontSize: fontSize)),
-      ));
-}
 
 Widget getButtonWidget1(
     BuildContext context, String s, var color, Function function) {

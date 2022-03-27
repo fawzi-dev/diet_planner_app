@@ -1,0 +1,175 @@
+import 'dart:io';
+
+import 'package:diet_planner_app/screens/first_page.dart';
+import 'package:flutter/material.dart';
+
+import '../constants/colors.dart';
+import '../utils/constant_data.dart';
+import '../utils/constant_widget.dart';
+import '../utils/size_config.dart';
+
+class EditProfilePage extends StatefulWidget {
+  @override
+  _EditProfilePage createState() {
+    return _EditProfilePage();
+  }
+}
+
+class _EditProfilePage extends State<EditProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
+
+  Future<bool> _requestPop() {
+    Navigator.of(context).pop();
+    return Future.value(true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    double topMargin = getScreenPercentSize(context, 1);
+
+    double profileHeight = getScreenPercentSize(context, 17);
+    double defaultMargin = getScreenPercentSize(context, 2);
+
+    return WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            title: getPrimaryAppBarText(context, 'Profile'),
+            backgroundColor: statusBar,
+          ),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                ListView(
+                  primary: true,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: (topMargin * 5)),
+                      child: Container(
+                          height: profileHeight + (profileHeight / 6),
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              height: profileHeight,
+                              width: profileHeight,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: statusBar,
+                                  width: getScreenPercentSize(context, 0.25),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: ClipOval(
+                                  child: Material(
+                                    color: statusBar,
+                                    child: Image.asset('assets/tihama.jpg'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )),
+                    ),
+                    getBoldTextWidget('Tihama Luqman', Colors.black45,
+                        TextAlign.center, FontWeight.w600, 26),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: defaultMargin),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft:
+                              Radius.circular(getScreenPercentSize(context, 4)),
+                          topRight: Radius.circular(
+                            getScreenPercentSize(context, 4),
+                          ),
+                        ),
+                      ),
+                      padding: EdgeInsets.all(defaultMargin),
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (ctx) => const FirstPage(),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 4.0, vertical: 8),
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: mealsBoxes,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 10),
+                                    Icon(Icons.refresh_rounded,
+                                        color: primaryColor, size: 28),
+                                    const SizedBox(width: 5),
+                                    getCustomText(
+                                        'Reset Plan',
+                                        Colors.black87,
+                                        1,
+                                        TextAlign.center,
+                                        FontWeight.w400,
+                                        18)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 4.0, vertical: 8),
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: mealsBoxes,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 13),
+                                    Icon(Icons.logout_rounded,
+                                        color: primaryColor, size: 28),
+                                    const SizedBox(width: 5),
+                                    getCustomText('Log out', Colors.black87, 1,
+                                        TextAlign.center, FontWeight.w400, 18)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: defaultMargin,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        onWillPop: _requestPop);
+  }
+}

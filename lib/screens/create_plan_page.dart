@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-import '../utils/ConstantData.dart';
-import '../utils/ConstantWidget.dart';
-import '../utils/SizeConfig.dart';
+import '../utils/constant_data.dart';
+import '../utils/constant_widget.dart';
+import '../utils/size_config.dart';
 
 class CreatePlanPage extends StatefulWidget {
   final int? bmr;
@@ -75,10 +75,10 @@ class _CreatePlanPage extends State<CreatePlanPage> {
                 ),
                 TweenAnimationBuilder<double>(
                   tween: Tween<double>(begin: 0.0, end: 1),
-                  duration: const Duration(seconds: 10),
+                  duration: const Duration(seconds: 7),
                   onEnd: () async {
                     DailyPlans dailyPlans = await ApiService.instance
-                        .generateMealPlan(targetCalories: widget.bmr!);
+                        .generateMealsPlans(targetCalories: widget.bmr!);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -1,13 +1,13 @@
 class Ingredients {
-  List<Ingredients>? ingredients;
+  List<Ingredient>? ingredients;
 
   Ingredients({this.ingredients});
 
   Ingredients.fromJson(Map<String, dynamic> json) {
     if (json['ingredients'] != null) {
-      ingredients = <Ingredients>[];
+      ingredients = <Ingredient>[];
       json['ingredients'].forEach((v) {
-        ingredients!.add(Ingredients.fromJson(v));
+        ingredients!.add(Ingredient.fromJson(v));
       });
     }
   }

@@ -7,12 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../constants/colors.dart';
-import '../models/IntroModel.dart';
-import '../utils/ConstantData.dart';
-import '../utils/ConstantWidget.dart';
-import '../utils/DataFile.dart';
-import '../utils/PrefData.dart';
-import '../utils/SizeConfig.dart';
+import '../models/intro_model.dart';
+import '../utils/constant_data.dart';
+import '../utils/constant_widget.dart';
+import '../utils/data_file.dart';
+import '../utils/pref_data.dart';
+import '../utils/size_config.dart';
 
 class IntroPage extends StatefulWidget {
   // final ValueChanged<bool> onChanged;

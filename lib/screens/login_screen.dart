@@ -69,57 +69,57 @@ class _LoginItemsState extends State<LoginItems> {
                     style: welcomeText,
                   ),
                 ),
-                TextInputs(
-                  title: 'Username',
-                  icon: Icons.check,
-                  isOn: true,
-                  iconColor: Colors.white,
-                  onTap: () {},
-                  obscureText: false,
-                ),
-                TextInputs(
-                  title: 'Password',
-                  icon: Icons.remove_red_eye,
-                  isOn: false,
-                  iconColor: Colors.grey,
-                  onTap: () {
-                    setState(() {
-                      // true = false
-                      obscuredText = !obscuredText;
-                    });
-                  },
-                  obscureText: obscuredText,
-                ),
-                const Text('Forget your password?'),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        borderRadius:
-                            BorderRadius.circular(constraints.maxHeight * 0.02),
-                        onTap: () {},
-                        splashColor: Colors.white54,
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            color: loginButton,
-                            borderRadius: BorderRadius.circular(
-                                constraints.maxHeight * 0.02),
-                          ),
-                          height: constraints.maxHeight * 0.095,
-                          child: const Center(
-                            child: FittedBox(
-                              child: Text(
-                                'Login',
-                                style: loginText,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                const SignUpButton(),
+                // TextInputs(
+                //   title: 'Username',
+                //   icon: Icons.check,
+                //   isOn: true,
+                //   iconColor: Colors.white,
+                //   onTap: () {},
+                //   obscureText: false,
+                // ),
+                // TextInputs(
+                //   title: 'Password',
+                //   icon: Icons.remove_red_eye,
+                //   isOn: false,
+                //   iconColor: Colors.grey,
+                //   onTap: () {
+                //     setState(() {
+                //       // true = false
+                //       obscuredText = !obscuredText;
+                //     });
+                //   },
+                //   obscureText: obscuredText,
+                // ),
+                // const Text('Forget your password?'),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: InkWell(
+                //         borderRadius:
+                //             BorderRadius.circular(constraints.maxHeight * 0.02),
+                //         onTap: () {},
+                //         splashColor: Colors.white54,
+                //         child: Ink(
+                //           decoration: BoxDecoration(
+                //             color: loginButton,
+                //             borderRadius: BorderRadius.circular(
+                //                 constraints.maxHeight * 0.02),
+                //           ),
+                //           height: constraints.maxHeight * 0.095,
+                //           child: const Center(
+                //             child: FittedBox(
+                //               child: Text(
+                //                 'Login',
+                //                 style: loginText,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     )
+                //   ],
+                // ),
+                // const SignUpButton(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

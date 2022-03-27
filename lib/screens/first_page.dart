@@ -8,12 +8,12 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-import '../models/DietModel.dart';
-import '../utils/ConstantData.dart';
-import '../utils/ConstantWidget.dart';
-import '../utils/DataFile.dart';
-import '../utils/PrefData.dart';
-import '../utils/SizeConfig.dart';
+import '../models/diet_model.dart';
+import '../utils/constant_data.dart';
+import '../utils/constant_widget.dart';
+import '../utils/data_file.dart';
+import '../utils/pref_data.dart';
+import '../utils/size_config.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);

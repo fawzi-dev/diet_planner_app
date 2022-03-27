@@ -6,7 +6,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../constants/colors.dart';
 
-double trackCalorie = 0.0;
+List<double> trackCalorie = [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+];
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, this.dailyPlans}) : super(key: key);
@@ -21,6 +30,69 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    animateToPageMethod(page);
+    getData();
+  }
+
+  List<MealsTime> mealsTime = [
+    MealsTime(),
+    MealsTime(),
+    MealsTime(),
+    MealsTime(),
+    MealsTime(),
+    MealsTime(),
+  ];
+
+  List<int> friId = [];
+  List<int> satId = [];
+  List<int> sunId = [];
+  List<int> monId = [];
+  List<int> tueId = [];
+  List<int> wenId = [];
+  List<int> thuId = [];
+
+  late List<List<int>> mealsIngridentsID = [
+    friId,
+    satId,
+    sunId,
+    monId,
+    tueId,
+    wenId,
+    thuId
+  ];
+
+  getData() async {
+    for (var element in widget.dailyPlans!.week!.friday!.meals!) {
+      mealsIngridentsID[0].add(element.id!);
+    }
+    for (var element in widget.dailyPlans!.week!.saturday!.meals!) {
+      mealsIngridentsID[1].add(element.id!);
+    }
+    for (var element in widget.dailyPlans!.week!.sunday!.meals!) {
+      mealsIngridentsID[2].add(element.id!);
+    }
+    for (var element in widget.dailyPlans!.week!.monday!.meals!) {
+      mealsIngridentsID[3].add(element.id!);
+    }
+    for (var element in widget.dailyPlans!.week!.tuesday!.meals!) {
+      mealsIngridentsID[4].add(element.id!);
+    }
+    for (var element in widget.dailyPlans!.week!.wednesday!.meals!) {
+      mealsIngridentsID[5].add(element.id!);
+    }
+    for (var element in widget.dailyPlans!.week!.thursday!.meals!) {
+      mealsIngridentsID[6].add(element.id!);
+    }
+  }
+
+  animateToPageMethod(int index) {
+    if (pageController.hasClients) {
+      pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
@@ -67,165 +139,258 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (ctx, constraints) => SizedBox(
-            child: PageView.builder(
-              itemCount: 7,
-              itemBuilder: (ctx, index) => Column(
-                children: [
-                  Container(
-                    child: Stack(
+        child: PageView(
+          onPageChanged: (selectedPage) {
+            page = selectedPage;
+            setState(() {});
+          },
+          scrollDirection: Axis.horizontal,
+          controller: pageController,
+          children: [
+            DailyMealsPlan(
+              calories: calories,
+              fat: fat,
+              protein: protein,
+              carbo: carbo,
+              mealsTime: mealsTime,
+              mealsIngridentIDs: mealsIngridentsID,
+            ),
+            EditProfilePage()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DailyMealsPlan extends StatefulWidget {
+  const DailyMealsPlan(
+      {Key? key,
+      required this.calories,
+      required this.fat,
+      required this.protein,
+      required this.carbo,
+      required this.mealsTime,
+      required this.mealsIngridentIDs})
+      : super(key: key);
+
+  final List<double> calories;
+  final List<double> fat;
+  final List<double> protein;
+  final List<double> carbo;
+  final List<MealsTime> mealsTime;
+  final List<List<int>> mealsIngridentIDs;
+
+  @override
+  State<DailyMealsPlan> createState() => _DailyMealsPlanState();
+}
+
+class _DailyMealsPlanState extends State<DailyMealsPlan> {
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (ctx, constraints) => SizedBox(
+        child: PageView.builder(
+          itemCount: 7,
+          itemBuilder: (ctx, index) => Column(
+            children: [
+              Container(
+                child: Stack(
                       alignment: Alignment.center,
                       children: [
                         SfRadialGauge(axes: [
                           RadialAxis(
                             showTicks: false,
                             minimum: 0,
-                            maximum: calories[index],
-                            showLabels: false,
-                            startAngle: 180,
-                            endAngle: 0,
-                            radiusFactor: 1.2,
-                            canScaleToFit: true,
-                            axisLineStyle: const AxisLineStyle(
-                              thickness: 0.05,
-                              color: Colors.white24,
-                              thicknessUnit: GaugeSizeUnit.factor,
-                              cornerStyle: CornerStyle.startCurve,
-                            ),
-                            pointers: <GaugePointer>[
-                              RangePointer(
-                                  color: Colors.white,
-                                  value: trackCalorie,
-                                  width: 0.05,
-                                  sizeUnit: GaugeSizeUnit.factor,
-                                  cornerStyle: CornerStyle.bothCurve)
-                            ],
+                          maximum: widget.calories[index],
+                          showLabels: false,
+                          startAngle: 180,
+                          endAngle: 0,
+                          radiusFactor: 1.2,
+                          canScaleToFit: true,
+                          axisLineStyle: const AxisLineStyle(
+                            thickness: 0.07,
+                            color: Colors.white24,
+                            thicknessUnit: GaugeSizeUnit.factor,
+                            cornerStyle: CornerStyle.startCurve,
                           ),
-                        ]),
-                        Column(
+                          pointers: <GaugePointer>[
+                            RangePointer(
+                                color: Colors.white,
+                                value: trackCalorie[index],
+                                width: 0.05,
+                                sizeUnit: GaugeSizeUnit.factor,
+                                cornerStyle: CornerStyle.bothCurve)
+                          ],
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${trackCalorie[index].round()}',
+                            style: gaugeLabel),
+                        Text('out of ${widget.calories[index].round()} kCal',
+                            style: gaugeLabelSub),
+                        SizedBox(height: constraints.maxHeight * 0.02),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('${calories[index].round()}',
-                                style: gaugeLabel),
-                            Text('kcal left', style: gaugeLabelSub),
-                            SizedBox(height: constraints.maxHeight * 0.02),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                UserInfo(
-                                  index: index,
-                                  info: fat,
-                                  label: 'Fat',
-                                  color: Colors.amber,
-                                ),
-                                UserInfo(
-                                    index: index,
-                                    info: protein,
-                                    label: 'Protein',
-                                    color: Colors.redAccent),
-                                UserInfo(
-                                    index: index,
-                                    info: carbo,
-                                    label: 'Carbo',
-                                    color: Colors.lightBlue)
-                              ],
-                            )
+                            UserInfo(
+                              index: index,
+                              info: widget.fat,
+                              label: 'Fat',
+                              color: Colors.amber,
+                            ),
+                            UserInfo(
+                                index: index,
+                                info: widget.protein,
+                                label: 'Protein',
+                                color: Colors.redAccent),
+                            UserInfo(
+                                index: index,
+                                info: widget.carbo,
+                                label: 'Carbo',
+                                color: Colors.lightBlue)
                           ],
                         )
                       ],
-                    ),
-                    height: constraints.maxHeight * 0.3,
-                    decoration: const BoxDecoration(
-                      color: statusBar,
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(40),
-                        bottomLeft: Radius.circular(40),
-                      ),
-                    ),
+                    )
+                  ],
+                ),
+                height: constraints.maxHeight * 0.3,
+                decoration: const BoxDecoration(
+                  color: statusBar,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(40),
+                    bottomLeft: Radius.circular(40),
                   ),
-                  SizedBox(
-                    height: constraints.maxHeight * 0.05,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: constraints.maxWidth * 0.05),
-                    child: Column(
+                ),
+              ),
+              SizedBox(
+                height: constraints.maxHeight * 0.05,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth * 0.05),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/ios_arrow_left.svg',
-                              color: const Color(0xB31E1E1E),
-                              height: 15,
-                              width: 15,
-                            ),
-                            Text(
-                              'Day ${index + 1}',
-                              style: dateAndTime,
-                            ),
-                            SvgPicture.asset(
-                              'assets/icons/ios_arrow_right.svg',
-                              height: 15,
-                              width: 15,
-                            ),
-                          ],
+                        SvgPicture.asset(
+                          'assets/icons/ios_arrow_left.svg',
+                          color: const Color(0xB31E1E1E),
+                          height: 15,
+                          width: 15,
                         ),
-                        SizedBox(height: constraints.maxHeight * 0.05),
-                        SizedBox(
-                          height: constraints.maxHeight * 0.55,
-                          child: ListView(
-                            physics: const BouncingScrollPhysics(),
-                            children: [
-                              MealsWidget(
-                                onTap: () {
-                                  trackCalorie += (calories[index] / 3);
-                                  setState(() {});
-                                  debugPrint(trackCalorie.toString());
-                                },
-                                constraints: constraints,
-                                title: 'Breakfast',
-                                subtitle: calories[index] / 3,
-                                imgPath: 'assets/meals/breakfast.svg',
-                              ),
-                              MealsWidget(
-                                  onTap: () {
-                                    if (trackCalorie < calories[index]) {
-                                      trackCalorie += (calories[index] / 3);
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content:
-                                              Text('That is enough for tday'),
-                                        ),
-                                      );
-                                    }
-                                    setState(() {});
-                                    debugPrint(trackCalorie.toString());
-                                  },
-                                  constraints: constraints,
-                                  title: 'Lunch',
-                                  subtitle: calories[index].round() / 3,
-                                  imgPath: 'assets/meals/lunch.svg'),
-                              MealsWidget(
-                                  onTap: () {
-                                    trackCalorie += (calories[index] / 3);
-                                    setState(() {});
-                                    debugPrint(trackCalorie.toString());
-                                  },
-                                  constraints: constraints,
-                                  title: 'Dinner',
-                                  subtitle: calories[index].round() / 3,
-                                  imgPath: 'assets/meals/dinner.svg'),
-                            ],
-                          ),
+                        Text(
+                          'Day ${index + 1}',
+                          style: dateAndTime,
+                        ),
+                        SvgPicture.asset(
+                          'assets/icons/ios_arrow_right.svg',
+                          height: 15,
+                          width: 15,
                         ),
                       ],
                     ),
-                  )
-                ],
+                    SizedBox(height: constraints.maxHeight * 0.05),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.55,
+                      child: ListView(
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          MealsWidget(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (ctx) => DishDetailPage(
+                                    id: widget.mealsIngridentIDs[index][0],
+                                    protein: widget.protein[index],
+                                    fat: widget.fat[index],
+                                    carbo: widget.carbo[index],
+                                    appBarTitle: 'Breakfast',
+                                  ),
+                                ),
+                              );
+                            },
+                                onTap: () {
+                              if (widget.mealsTime[index].breakfast == true) {
+                                trackCalorie[index] +=
+                                    (widget.calories[index] / 3);
+                                setState(() {});
+                                debugPrint(trackCalorie.toString());
+                                widget.mealsTime[index].breakfast = false;
+                              } else {
+                                showSnackBar(
+                                    context,
+                                    'You already intook breakfast',
+                                    Colors.black54);
+                              }
+                            },
+                            constraints: constraints,
+                            title: 'Breakfast',
+                            subtitle: widget.calories[index] / 3,
+                            imgPath: 'assets/meals/breakfast.svg',
+                          ),
+                          MealsWidget(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (ctx) => DishDetailPage(
+                                        id: widget.mealsIngridentIDs[index][1],
+                                        protein: widget.protein[index],
+                                        fat: widget.fat[index],
+                                        carbo: widget.carbo[index],
+                                        appBarTitle: 'Lunch',
+                                      ),
+                                    ));
+                              },
+                              onTap: () {
+                                trackCalorie[index] +=
+                                    (widget.calories[index] / 3);
+                                setState(() {});
+                                debugPrint(trackCalorie.toString());
+                              },
+                              constraints: constraints,
+                              title: 'Lunch',
+                              subtitle: widget.calories[index].round() / 3,
+                              imgPath: 'assets/meals/lunch.svg'),
+                          MealsWidget(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (ctx) => DishDetailPage(
+                                      id: widget.mealsIngridentIDs[index][2],
+                                      protein: widget.protein[index],
+                                      fat: widget.fat[index],
+                                      carbo: widget.carbo[index],
+                                      appBarTitle: 'Dinner',
+                                    ),
+                                  ),
+                                );
+                              },
+                              onTap: () {
+                                trackCalorie[index] +=
+                                    (widget.calories[index] / 3);
+                                setState(() {});
+                                debugPrint(trackCalorie.toString());
+                              },
+                              constraints: constraints,
+                              title: 'Dinner',
+                              subtitle: widget.calories[index].round() / 3,
+                              imgPath: 'assets/meals/dinner.svg'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
               ),
             ),
           ),
@@ -271,6 +436,7 @@ class MealsWidget extends StatelessWidget {
     required this.imgPath,
     required this.subtitle,
     required this.onTap,
+    required this.onPressed,
   }) : super(key: key);
 
   final BoxConstraints constraints;
@@ -278,64 +444,68 @@ class MealsWidget extends StatelessWidget {
   final String imgPath;
   final double subtitle;
   final VoidCallback onTap;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
-      child: Container(
-        height: constraints.maxHeight * 0.2,
-        width: constraints.maxWidth,
-        decoration: BoxDecoration(
-          color: mealsBoxes,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: constraints.maxWidth * 0.05,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        imgPath,
-                      ),
-                      SizedBox(
-                        height: constraints.maxHeight * 0.01,
-                      ),
-                      Text(
-                        title,
-                        style: mealTitle,
-                      ),
-                      Text(
-                        '${subtitle.round()} kCal',
-                        style: mealSub,
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 12.0, bottom: 12.0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: CircleAvatar(
-                      backgroundColor: mealBoxAddButtonColor,
-                      child: IconButton(
-                        icon: SvgPicture.asset('assets/icon_plus.svg'),
-                        onPressed: onTap,
-                      ),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
+        child: Container(
+          height: constraints.maxHeight * 0.2,
+          width: constraints.maxWidth,
+          decoration: BoxDecoration(
+            color: mealsBoxes,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: constraints.maxWidth * 0.05,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          imgPath,
+                        ),
+                        SizedBox(
+                          height: constraints.maxHeight * 0.01,
+                        ),
+                        Text(
+                          title,
+                          style: mealTitle,
+                        ),
+                        Text(
+                          '${subtitle.round()} kCal',
+                          style: mealSub,
+                        )
+                      ],
                     ),
                   ),
-                )
-              ],
-            )
-          ],
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12.0, bottom: 12.0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: CircleAvatar(
+                        backgroundColor: mealBoxAddButtonColor,
+                        child: IconButton(
+                          icon: SvgPicture.asset('assets/icon_plus.svg'),
+                          onPressed: onTap,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -1,12 +1,12 @@
-import 'package:diet_planner_app/constants/colors.dart';
-import 'package:diet_planner_app/constants/text_styles.dart';
+
 import 'package:diet_planner_app/models/daily_plans_models.dart';
 import 'package:diet_planner_app/screens/meals_ingridents.dart';
 import 'package:diet_planner_app/utils/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import '../constants/colors.dart';
+import '../utils/colors.dart';
+import '../utils/text_styles.dart';
 import 'edit_profile_page.dart';
 
 List<double> trackCalorie = [

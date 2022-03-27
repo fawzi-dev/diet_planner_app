@@ -4,11 +4,9 @@ import 'package:diet_planner_app/screens/home_screen.dart';
 import 'package:diet_planner_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
-import 'constants/colors.dart';
 import 'models/api_calls.dart';
-import 'package:provider/provider.dart';
 
+import 'utils/colors.dart';
 import 'utils/pref_data.dart';
 
 bool? isCreatePlan = true;

@@ -1,14 +1,14 @@
 import 'dart:io';
-
 import 'package:diet_planner_app/screens/first_page.dart';
 import 'package:flutter/material.dart';
-
-import '../constants/colors.dart';
+import '../utils/colors.dart';
 import '../utils/constant_data.dart';
 import '../utils/constant_widget.dart';
 import '../utils/size_config.dart';
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
+
   @override
   _EditProfilePage createState() {
     return _EditProfilePage();

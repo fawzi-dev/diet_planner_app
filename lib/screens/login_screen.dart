@@ -1,8 +1,10 @@
-import 'package:diet_planner_app/constants/colors.dart';
-import 'package:diet_planner_app/constants/screen_size.dart';
-import 'package:diet_planner_app/constants/text_styles.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../utils/colors.dart';
+import '../utils/screen_size.dart';
+import '../utils/text_styles.dart';
 
 class LoginHomePage extends StatelessWidget {
   const LoginHomePage({Key? key}) : super(key: key);

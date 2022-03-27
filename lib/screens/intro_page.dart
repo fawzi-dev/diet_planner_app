@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:diet_planner_app/screens/home_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../constants/colors.dart';
+
 import '../models/intro_model.dart';
+import '../utils/colors.dart';
 import '../utils/constant_data.dart';
 import '../utils/constant_widget.dart';
 import '../utils/data_file.dart';

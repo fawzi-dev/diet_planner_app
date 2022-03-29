@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:diet_planner_app/screens/home_screen.dart';
+import 'package:diet_planner_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 
 import '../models/intro_model.dart';
 import '../utils/colors.dart';
@@ -110,12 +110,13 @@ class _IntroPage extends State<IntroPage> {
                                   controller.jumpToPage(_position);
                                   setState(() {});
                                 } else {
-                                  PrefData.setIsIntro(false);
+                                  PrefData.setIsFirstTime(1);
                                   Navigator.of(context).pop(true);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const HomeScreen(),
+                                      builder: (context) =>
+                                          const LoginHomePage(),
                                     ),
                                   );
                                 }
@@ -282,12 +283,12 @@ class _IntroPage extends State<IntroPage> {
                               controller.jumpToPage(_position);
                               setState(() {});
                             } else {
-                              PrefData.setIsIntro(false);
+                              PrefData.setIsFirstTime(1);
                               Navigator.of(context).pop(true);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) => const LoginHomePage(),
                                 ),
                               );
                             }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:diet_planner_app/screens/create_plan_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +13,8 @@ import '../utils/constant_widget.dart';
 import '../utils/data_file.dart';
 import '../utils/pref_data.dart';
 import '../utils/size_config.dart';
+
+final user = FirebaseAuth.instance.currentUser;
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -27,6 +30,7 @@ class _FirstPage extends State<FirstPage> {
   int _genderPosition = 0;
   int _motivatePosition = 0;
   int userPrefPosition = 0;
+  int conditionPosition = 0;
   double tabHeight = 0;
   double tabWidth = 0;
   double tabRadius = 0;
@@ -40,6 +44,7 @@ class _FirstPage extends State<FirstPage> {
   List<DietModel> motivateList = DataFile.increaseWeightGoal();
   List<DietModel> getGender = DataFile.getGender();
   List<DietModel> getUserPref = DataFile.getUsersPreferences();
+  List<DietModel> condition = DataFile.conditionConcerned();
 
   int cm = 120;
   double kg1 = 45;
@@ -135,7 +140,7 @@ class _FirstPage extends State<FirstPage> {
                         _position++;
                         setState(() {});
                       } else {
-                        PrefData.setIsFirstTime(false);
+                        PrefData.setIsFirstTime(3);
                         // Navigator.of(context).pop(true);
 
                         // current weight
@@ -225,6 +230,7 @@ class _FirstPage extends State<FirstPage> {
     widgetList.add(weightWidget());
     widgetList.add(getUserPrefs());
     widgetList.add(increaseWeight());
+    widgetList.add(conditionConcern());
   }
 
   Widget getUserPrefs() {
@@ -306,6 +312,92 @@ class _FirstPage extends State<FirstPage> {
     );
   }
 
+  Widget conditionConcern() {
+    List<IconData> icons = [
+      FontAwesomeIcons.heartBroken,
+      Icons.no_food_rounded,
+      Icons.no_drinks_rounded
+    ];
+
+    SizeConfig().init(context);
+
+    return StatefulBuilder(
+      builder: (context, setState) => Container(
+        height: double.infinity,
+        width: double.infinity,
+        margin: EdgeInsets.all(margin!),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            getHeaderText(
+                "Is there anything we should be concerned about you?"),
+            Expanded(
+              child: ListView.builder(
+                itemCount: condition.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  bool isSelect = (index == conditionPosition);
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        conditionPosition = index;
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                        vertical: (margin! / 2),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: (margin!), vertical: (margin!)),
+                      decoration: BoxDecoration(
+                        color: isSelect ? primaryColor : Colors.transparent,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            getScreenPercentSize(context, 1.5),
+                          ),
+                        ),
+                        border: Border.all(
+                            color: isSelect
+                                ? Colors.transparent
+                                : subTextColor.withOpacity(0.1),
+                            width: 1.5),
+                      ),
+                      child: Row(
+                        children: [
+                          FaIcon(icons[index],
+                              color:
+                                  (isSelect) ? Colors.black54 : Colors.black26),
+                          SizedBox(
+                            width: margin,
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                getTextWidget(
+                                    condition[index].title!,
+                                    isSelect ? Colors.white : textColor,
+                                    TextAlign.start,
+                                    FontWeight.bold,
+                                    getScreenPercentSize(context, 2.4)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget increaseWeight() {
     SizeConfig().init(context);
 
@@ -353,7 +445,7 @@ class _FirstPage extends State<FirstPage> {
                       ),
                       child: Row(
                         children: [
-                          FaIcon(FontAwesomeIcons.weightHanging,
+                          Icon(FontAwesomeIcons.weightHanging,
                               color:
                                   (isSelect) ? Colors.black54 : Colors.black26),
                           SizedBox(

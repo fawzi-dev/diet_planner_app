@@ -1,10 +1,16 @@
-
+import 'package:diet_planner_app/models/google_auth.dart';
+import 'package:diet_planner_app/screens/first_page.dart';
+import 'package:diet_planner_app/utils/pref_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/colors.dart';
 import '../utils/screen_size.dart';
 import '../utils/text_styles.dart';
+
+final user = FirebaseAuth.instance.currentUser;
 
 class LoginHomePage extends StatelessWidget {
   const LoginHomePage({Key? key}) : super(key: key);
@@ -50,97 +56,82 @@ class LoginItems extends StatefulWidget {
 class _LoginItemsState extends State<LoginItems> {
   bool obscuredText = true;
 
+  late String isGoogle;
+
+  @override
+  void initState() {
+    isGoogle = '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // print('The value of boolean is : ' + obscuredText.toString());
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.green.shade100.withOpacity(0.3),
-      body: Center(
-        child: LayoutBuilder(
-          builder: (ctx, constraints) => Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            height: deviceScreenHeight(context) * .6,
-            width: deviceScreenWidth(context) * 9,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Flexible(
-                  child: Text(
-                    'Welcome',
-                    style: welcomeText,
+      body: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            PrefData.setIsFirstTime(2);
+            PrefData.setIsGoogle(true);
+            return const FirstPage();
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("Something went wrong"),
+            );
+          } else {
+            return Center(
+              child: LayoutBuilder(
+                builder: (ctx, constraints) => Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  height: deviceScreenHeight(context) * .6,
+                  width: deviceScreenWidth(context) * 9,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Flexible(
+                        child: Text(
+                          'Welcome',
+                          style: welcomeText,
+                        ),
+                      ),
+                      SizedBox(height: constraints.maxHeight * 0.05),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          OtherSignInOption(
+                            onTap: () {
+                              final provider = Provider.of<GoogleLoginClass>(
+                                  context,
+                                  listen: false);
+                              provider.loginButtonClicked();
+                            },
+                            imgUrl: 'assets/face.svg',
+                          ),
+                          const SizedBox(
+                            width: 25,
+                          ),
+                          OtherSignInOption(
+                            onTap: () {
+                              final provider = Provider.of<GoogleLoginClass>(
+                                  context,
+                                  listen: false);
+                              provider.googleLogin();
+                              setState(() {});
+                            },
+                            imgUrl: 'assets/google.svg',
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(height: constraints.maxHeight * 0.05),
-                // TextInputs(
-                //   title: 'Username',
-                //   icon: Icons.check,
-                //   isOn: true,
-                //   iconColor: Colors.white,
-                //   onTap: () {},
-                //   obscureText: false,
-                // ),
-                // TextInputs(
-                //   title: 'Password',
-                //   icon: Icons.remove_red_eye,
-                //   isOn: false,
-                //   iconColor: Colors.grey,
-                //   onTap: () {
-                //     setState(() {
-                //       // true = false
-                //       obscuredText = !obscuredText;
-                //     });
-                //   },
-                //   obscureText: obscuredText,
-                // ),
-                // const Text('Forget your password?'),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: InkWell(
-                //         borderRadius:
-                //             BorderRadius.circular(constraints.maxHeight * 0.02),
-                //         onTap: () {},
-                //         splashColor: Colors.white54,
-                //         child: Ink(
-                //           decoration: BoxDecoration(
-                //             color: loginButton,
-                //             borderRadius: BorderRadius.circular(
-                //                 constraints.maxHeight * 0.02),
-                //           ),
-                //           height: constraints.maxHeight * 0.095,
-                //           child: const Center(
-                //             child: FittedBox(
-                //               child: Text(
-                //                 'Login',
-                //                 style: loginText,
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ),
-                // const SignUpButton(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    OtherSignInOption(
-                      imgUrl: 'assets/face.svg',
-                    ),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    OtherSignInOption(
-                      imgUrl: 'assets/google.svg',
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
@@ -174,17 +165,19 @@ class OtherSignInOption extends StatelessWidget {
   OtherSignInOption({
     Key? key,
     required this.imgUrl,
+    required this.onTap,
   }) : super(key: key);
 
   final String imgUrl;
-  double radius =20;
+  final VoidCallback onTap;
+  double radius = 20;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       splashColor: Colors.white70,
       borderRadius: BorderRadius.circular(radius),
-      onTap: () {},
+      onTap: onTap,
       child: Ink(
         padding: const EdgeInsets.all(20),
         height: deviceScreenHeight(context) * .1,
@@ -192,7 +185,7 @@ class OtherSignInOption extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(
-             radius,
+            radius,
           ),
           boxShadow: [
             BoxShadow(
@@ -335,3 +328,56 @@ class OtherSignInOption extends StatelessWidget {
 //     );
 //   }
 // }
+
+
+// TextInputs(
+                  //   title: 'Username',
+                  //   icon: Icons.check,
+                  //   isOn: true,
+                  //   iconColor: Colors.white,
+                  //   onTap: () {},
+                  //   obscureText: false,
+                  // ),
+                  // TextInputs(
+                  //   title: 'Password',
+                  //   icon: Icons.remove_red_eye,
+                  //   isOn: false,
+                  //   iconColor: Colors.grey,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       // true = false
+                  //       obscuredText = !obscuredText;
+                  //     });
+                  //   },
+                  //   obscureText: obscuredText,
+                  // ),
+                  // const Text('Forget your password?'),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: InkWell(
+                  //         borderRadius:
+                  //             BorderRadius.circular(constraints.maxHeight * 0.02),
+                  //         onTap: () {},
+                  //         splashColor: Colors.white54,
+                  //         child: Ink(
+                  //           decoration: BoxDecoration(
+                  //             color: loginButton,
+                  //             borderRadius: BorderRadius.circular(
+                  //                 constraints.maxHeight * 0.02),
+                  //           ),
+                  //           height: constraints.maxHeight * 0.095,
+                  //           child: const Center(
+                  //             child: FittedBox(
+                  //               child: Text(
+                  //                 'Login',
+                  //                 style: loginText,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+                  // const SignUpButton(),

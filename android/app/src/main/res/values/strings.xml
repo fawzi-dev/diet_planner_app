@@ -1,0 +1,6 @@
+<resources>>
+<string name="app_name">Diet Planner</string>
+<string name="facebook_app_id">370501944797057=</string>
+<string name="fb_login_protocol_scheme">fb370501944797057</string>
+<string name="facebook_client_token">56789</string>
+</resources>

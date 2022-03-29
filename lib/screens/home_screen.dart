@@ -1,7 +1,10 @@
-
+import 'package:diet_planner_app/main.dart';
 import 'package:diet_planner_app/models/daily_plans_models.dart';
+import 'package:diet_planner_app/screens/login_screen.dart';
 import 'package:diet_planner_app/screens/meals_ingridents.dart';
+import 'package:diet_planner_app/utils/pref_data.dart';
 import 'package:diet_planner_app/utils/snack_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -44,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     animateToPageMethod(page);
     getData();
+    
   }
 
   List<MealsTime> mealsTime = [
@@ -187,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mealsTime: mealsTime,
               mealsIngridentIDs: mealsIngridentsID,
             ),
-            EditProfilePage()
+            const EditProfilePage()
           ],
         ),
       ),

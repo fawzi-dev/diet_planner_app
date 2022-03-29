@@ -1,10 +1,17 @@
 import 'dart:io';
 import 'package:diet_planner_app/screens/first_page.dart';
+import 'package:diet_planner_app/screens/login_screen.dart';
+import 'package:diet_planner_app/utils/pref_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/google_auth.dart';
 import '../utils/colors.dart';
 import '../utils/constant_data.dart';
 import '../utils/constant_widget.dart';
 import '../utils/size_config.dart';
+
+final user = FirebaseAuth.instance.currentUser;
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -69,14 +76,17 @@ class _EditProfilePage extends State<EditProfilePage> {
                                 child: ClipOval(
                                   child: Material(
                                     color: statusBar,
-                                    child: Image.asset('assets/tihama.jpg'),
+                                    child: Image.network(
+                                      user!.photoURL!,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           )),
                     ),
-                    getBoldTextWidget('Tihama Luqman', Colors.black45,
+                    getBoldTextWidget(user!.displayName!, Colors.black45,
                         TextAlign.center, FontWeight.w600, 26),
                     Container(
                       margin: EdgeInsets.symmetric(vertical: defaultMargin),
@@ -132,7 +142,21 @@ class _EditProfilePage extends State<EditProfilePage> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              PrefData.setIsFirstTime(1);
+                              final provider = Provider.of<GoogleLoginClass>(
+                                  context,
+                                  listen: false);
+                              provider.googleLogOut();
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (ctx) => LoginHomePage(
+                                      key: UniqueKey(),
+                                    ),
+                                  ),
+                                  (Route<dynamic> route) => false);
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 4.0, vertical: 8),

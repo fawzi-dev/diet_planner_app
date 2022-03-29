@@ -43,11 +43,14 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.tzb.diet_planner_app"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
+
     }
+    
 
     buildTypes {
         release {
@@ -64,4 +67,10 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.firebase:firebase-bom:29.2.1'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.facebook.android:facebook-login:latest.release'
+
 }
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'

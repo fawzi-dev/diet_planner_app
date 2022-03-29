@@ -128,6 +128,24 @@ class DataFile {
     return list;
   }
 
+  static conditionConcerned() {
+    List<DietModel> list = [];
+
+    DietModel model = DietModel();
+    model.title = "Heart Diseases";
+    list.add(model);
+
+    model = DietModel();
+    model.title = "Obseity";
+    list.add(model);
+
+    model = DietModel();
+    model.title = "Diabetes";
+    list.add(model);
+
+    return list;
+  }
+
   static getUsersPreferences() {
     List<DietModel> list = [];
 

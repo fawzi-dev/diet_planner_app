@@ -386,11 +386,19 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                                     ));
                               },
                               onTap: () {
+                              if (widget.mealsTime[index].lunch == true) {
                                 trackCalorie[index] +=
                                     (widget.calories[index] / 3);
                                 setState(() {});
                                 debugPrint(trackCalorie.toString());
-                              },
+                                widget.mealsTime[index].lunch = false;
+                              } else {
+                                showSnackBar(
+                                    context,
+                                    'You already intook lunch',
+                                    Colors.black54);
+                              }
+                            },
                               constraints: constraints,
                               title: 'Lunch',
                               subtitle: widget.calories[index].round() / 3,
@@ -411,11 +419,19 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                                 );
                               },
                               onTap: () {
+                              if (widget.mealsTime[index].dinner== true) {
                                 trackCalorie[index] +=
                                     (widget.calories[index] / 3);
                                 setState(() {});
                                 debugPrint(trackCalorie.toString());
-                              },
+                                widget.mealsTime[index].dinner = false;
+                              } else {
+                                showSnackBar(
+                                    context,
+                                    'You already intook dinner',
+                                    Colors.black54);
+                              }
+                            },
                               constraints: constraints,
                               title: 'Dinner',
                               subtitle: widget.calories[index].round() / 3,

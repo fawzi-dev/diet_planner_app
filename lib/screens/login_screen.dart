@@ -1,8 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:diet_planner_app/models/google_auth.dart';
 import 'package:diet_planner_app/screens/first_page.dart';
 import 'package:diet_planner_app/utils/pref_data.dart';
+import 'package:diet_planner_app/utils/snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -64,6 +67,34 @@ class _LoginItemsState extends State<LoginItems> {
     super.initState();
   }
 
+  Future<void> login() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.mobile) {
+      final provider = Provider.of<GoogleLoginClass>(context, listen: false);
+      provider.googleLogin();
+    } else {
+      showSnackBar(
+          context, 'You are not connected to internet.', Colors.red, true);
+    }
+    setState(() {});
+  }
+
+  loginAsAnony() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.mobile) {
+      PrefData.setIsFirstTime(2);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (ctx) => FirstPage(isAnony: true)),
+          (route) => false);
+    } else {
+      showSnackBar(
+          context, 'You are not connected to internet.', Colors.red, true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // print('The value of boolean is : ' + obscuredText.toString());
@@ -76,7 +107,9 @@ class _LoginItemsState extends State<LoginItems> {
           if (snapshot.hasData) {
             PrefData.setIsFirstTime(2);
             PrefData.setIsGoogle(true);
-            return const FirstPage();
+            return FirstPage(
+              isAnony: false,
+            );
           } else if (snapshot.hasError) {
             return const Center(
               child: Text("Something went wrong"),
@@ -103,23 +136,16 @@ class _LoginItemsState extends State<LoginItems> {
                         children: [
                           OtherSignInOption(
                             onTap: () {
-                              final provider = Provider.of<GoogleLoginClass>(
-                                  context,
-                                  listen: false);
-                              provider.loginButtonClicked();
+                              loginAsAnony();
                             },
-                            imgUrl: 'assets/face.svg',
+                            imgUrl: 'assets/anony.svg',
                           ),
                           const SizedBox(
                             width: 25,
                           ),
                           OtherSignInOption(
                             onTap: () {
-                              final provider = Provider.of<GoogleLoginClass>(
-                                  context,
-                                  listen: false);
-                              provider.googleLogin();
-                              setState(() {});
+                              login();
                             },
                             imgUrl: 'assets/google.svg',
                           )

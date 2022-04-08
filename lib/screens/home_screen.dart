@@ -1,16 +1,14 @@
-import 'package:diet_planner_app/main.dart';
 import 'package:diet_planner_app/models/daily_plans_models.dart';
-import 'package:diet_planner_app/screens/login_screen.dart';
 import 'package:diet_planner_app/screens/meals_ingridents.dart';
 import 'package:diet_planner_app/utils/pref_data.dart';
 import 'package:diet_planner_app/utils/snack_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../utils/colors.dart';
 import '../utils/text_styles.dart';
 import 'edit_profile_page.dart';
+import 'package:restart_app/restart_app.dart';
 
 List<double> trackCalorie = [
   0.0,
@@ -47,10 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     animateToPageMethod(page);
     getData();
-    
   }
 
   List<MealsTime> mealsTime = [
+    MealsTime(),
     MealsTime(),
     MealsTime(),
     MealsTime(),
@@ -78,26 +76,39 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   getData() async {
-    for (var element in widget.dailyPlans!.week!.friday!.meals!) {
-      mealsIngridentsID[0].add(element.id!);
-    }
-    for (var element in widget.dailyPlans!.week!.saturday!.meals!) {
-      mealsIngridentsID[1].add(element.id!);
-    }
-    for (var element in widget.dailyPlans!.week!.sunday!.meals!) {
-      mealsIngridentsID[2].add(element.id!);
-    }
-    for (var element in widget.dailyPlans!.week!.monday!.meals!) {
-      mealsIngridentsID[3].add(element.id!);
-    }
-    for (var element in widget.dailyPlans!.week!.tuesday!.meals!) {
-      mealsIngridentsID[4].add(element.id!);
-    }
-    for (var element in widget.dailyPlans!.week!.wednesday!.meals!) {
-      mealsIngridentsID[5].add(element.id!);
-    }
-    for (var element in widget.dailyPlans!.week!.thursday!.meals!) {
-      mealsIngridentsID[6].add(element.id!);
+    if (widget.dailyPlans.hashCode == 2011) {
+      const Center(
+        child: ListTile(
+          leading: Icon(
+            Icons.wifi_off,
+            size: 55,
+          ),
+          title: Text('Some error occurred!'),
+          subtitle: Text('Please connect to internet and try again!.'),
+        ),
+      );
+    } else {
+      for (var element in widget.dailyPlans!.week!.friday!.meals!) {
+        mealsIngridentsID[0].add(element.id!);
+      }
+      for (var element in widget.dailyPlans!.week!.saturday!.meals!) {
+        mealsIngridentsID[1].add(element.id!);
+      }
+      for (var element in widget.dailyPlans!.week!.sunday!.meals!) {
+        mealsIngridentsID[2].add(element.id!);
+      }
+      for (var element in widget.dailyPlans!.week!.monday!.meals!) {
+        mealsIngridentsID[3].add(element.id!);
+      }
+      for (var element in widget.dailyPlans!.week!.tuesday!.meals!) {
+        mealsIngridentsID[4].add(element.id!);
+      }
+      for (var element in widget.dailyPlans!.week!.wednesday!.meals!) {
+        mealsIngridentsID[5].add(element.id!);
+      }
+      for (var element in widget.dailyPlans!.week!.thursday!.meals!) {
+        mealsIngridentsID[6].add(element.id!);
+      }
     }
   }
 
@@ -113,45 +124,63 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<double> calories = [
-      widget.dailyPlans!.week!.friday!.nutrients!.calories!,
-      widget.dailyPlans!.week!.saturday!.nutrients!.calories!,
-      widget.dailyPlans!.week!.sunday!.nutrients!.calories!,
-      widget.dailyPlans!.week!.monday!.nutrients!.calories!,
-      widget.dailyPlans!.week!.tuesday!.nutrients!.calories!,
-      widget.dailyPlans!.week!.wednesday!.nutrients!.calories!,
-      widget.dailyPlans!.week!.thursday!.nutrients!.calories!,
-    ];
+    List<double> calories = [];
+    List<double> fat = [];
+    List<double> protein = [];
+    List<double> carbo = [];
 
-    List<double> fat = [
-      widget.dailyPlans!.week!.friday!.nutrients!.fat!,
-      widget.dailyPlans!.week!.saturday!.nutrients!.fat!,
-      widget.dailyPlans!.week!.sunday!.nutrients!.fat!,
-      widget.dailyPlans!.week!.monday!.nutrients!.fat!,
-      widget.dailyPlans!.week!.tuesday!.nutrients!.fat!,
-      widget.dailyPlans!.week!.wednesday!.nutrients!.fat!,
-      widget.dailyPlans!.week!.thursday!.nutrients!.fat!,
-    ];
+    if (widget.dailyPlans.hashCode == 2011) {
+      const Center(
+        child: ListTile(
+          leading: Icon(
+            Icons.wifi_off,
+            size: 55,
+          ),
+          title: Text('Some error occurred!'),
+          subtitle: Text('Please connect to internet and try again!.'),
+        ),
+      );
+    } else {
+      calories = [
+        widget.dailyPlans!.week!.friday!.nutrients!.calories!,
+        widget.dailyPlans!.week!.saturday!.nutrients!.calories!,
+        widget.dailyPlans!.week!.sunday!.nutrients!.calories!,
+        widget.dailyPlans!.week!.monday!.nutrients!.calories!,
+        widget.dailyPlans!.week!.tuesday!.nutrients!.calories!,
+        widget.dailyPlans!.week!.wednesday!.nutrients!.calories!,
+        widget.dailyPlans!.week!.thursday!.nutrients!.calories!,
+      ];
 
-    List<double> protein = [
-      widget.dailyPlans!.week!.friday!.nutrients!.protein!,
-      widget.dailyPlans!.week!.saturday!.nutrients!.protein!,
-      widget.dailyPlans!.week!.sunday!.nutrients!.protein!,
-      widget.dailyPlans!.week!.monday!.nutrients!.protein!,
-      widget.dailyPlans!.week!.tuesday!.nutrients!.protein!,
-      widget.dailyPlans!.week!.wednesday!.nutrients!.protein!,
-      widget.dailyPlans!.week!.thursday!.nutrients!.protein!,
-    ];
+      fat = [
+        widget.dailyPlans!.week!.friday!.nutrients!.fat!,
+        widget.dailyPlans!.week!.saturday!.nutrients!.fat!,
+        widget.dailyPlans!.week!.sunday!.nutrients!.fat!,
+        widget.dailyPlans!.week!.monday!.nutrients!.fat!,
+        widget.dailyPlans!.week!.tuesday!.nutrients!.fat!,
+        widget.dailyPlans!.week!.wednesday!.nutrients!.fat!,
+        widget.dailyPlans!.week!.thursday!.nutrients!.fat!,
+      ];
 
-    List<double> carbo = [
-      widget.dailyPlans!.week!.friday!.nutrients!.carbohydrates!,
-      widget.dailyPlans!.week!.saturday!.nutrients!.carbohydrates!,
-      widget.dailyPlans!.week!.sunday!.nutrients!.carbohydrates!,
-      widget.dailyPlans!.week!.monday!.nutrients!.carbohydrates!,
-      widget.dailyPlans!.week!.tuesday!.nutrients!.carbohydrates!,
-      widget.dailyPlans!.week!.wednesday!.nutrients!.carbohydrates!,
-      widget.dailyPlans!.week!.thursday!.nutrients!.carbohydrates!,
-    ];
+      protein = [
+        widget.dailyPlans!.week!.friday!.nutrients!.protein!,
+        widget.dailyPlans!.week!.saturday!.nutrients!.protein!,
+        widget.dailyPlans!.week!.sunday!.nutrients!.protein!,
+        widget.dailyPlans!.week!.monday!.nutrients!.protein!,
+        widget.dailyPlans!.week!.tuesday!.nutrients!.protein!,
+        widget.dailyPlans!.week!.wednesday!.nutrients!.protein!,
+        widget.dailyPlans!.week!.thursday!.nutrients!.protein!,
+      ];
+
+      carbo = [
+        widget.dailyPlans!.week!.friday!.nutrients!.carbohydrates!,
+        widget.dailyPlans!.week!.saturday!.nutrients!.carbohydrates!,
+        widget.dailyPlans!.week!.sunday!.nutrients!.carbohydrates!,
+        widget.dailyPlans!.week!.monday!.nutrients!.carbohydrates!,
+        widget.dailyPlans!.week!.tuesday!.nutrients!.carbohydrates!,
+        widget.dailyPlans!.week!.wednesday!.nutrients!.carbohydrates!,
+        widget.dailyPlans!.week!.thursday!.nutrients!.carbohydrates!,
+      ];
+    }
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -174,27 +203,55 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Profile')
         ],
       ),
-      body: SafeArea(
-        child: PageView(
-          onPageChanged: (selectedPage) {
-            page = selectedPage;
-            setState(() {});
-          },
-          scrollDirection: Axis.horizontal,
-          controller: pageController,
-          children: [
-            DailyMealsPlan(
-              calories: calories,
-              fat: fat,
-              protein: protein,
-              carbo: carbo,
-              mealsTime: mealsTime,
-              mealsIngridentIDs: mealsIngridentsID,
+      body: widget.dailyPlans != null
+          ? SafeArea(
+              child: PageView(
+                onPageChanged: (selectedPage) {
+                  page = selectedPage;
+                  setState(() {});
+                },
+                scrollDirection: Axis.horizontal,
+                controller: pageController,
+                children: [
+                  DailyMealsPlan(
+                    calories: calories,
+                    fat: fat,
+                    protein: protein,
+                    carbo: carbo,
+                    mealsTime: mealsTime,
+                    mealsIngridentIDs: mealsIngridentsID,
+                  ),
+                  EditProfilePage(
+                    key: UniqueKey(),
+                  )
+                ],
+              ),
+            )
+          : Center(
+              child: ListTile(
+                leading: const Icon(
+                  Icons.wifi_off,
+                  size: 45,
+                ),
+                title: const Text('Please connect to internet and try again!'),
+                subtitle: GestureDetector(
+                  onTap: () {
+                    Restart.restartApp();
+                  },
+                  child: const Text(
+                    'Try Again!',
+                    style: TextStyle(
+                        color: statusBar, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                // trailing: IconButton(
+                //   onPressed: ()  {
+                //  Restart.restartApp();
+                //   },
+                //   icon: const Icon(Icons.refresh_outlined),
+                // ),
+              ),
             ),
-            const EditProfilePage()
-          ],
-        ),
-      ),
     );
   }
 }
@@ -222,6 +279,20 @@ class DailyMealsPlan extends StatefulWidget {
 }
 
 class _DailyMealsPlanState extends State<DailyMealsPlan> {
+  save() async {
+    List<String> myListOfStrings =
+        trackCalorie.map((i) => i.toString()).toList();
+    await PrefData.setDailyCalorie(myListOfStrings);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    List<String> myList = (PrefData.getDailyCalorie() ?? <String>[]);
+    trackCalorie = myList.map((i) => double.parse(i)).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -242,19 +313,19 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                           showLabels: false,
                           startAngle: 180,
                           endAngle: 0,
-                          radiusFactor: 1.2,
+                          radiusFactor: 1.23,
                           canScaleToFit: true,
                           axisLineStyle: const AxisLineStyle(
-                            thickness: 0.07,
+                            thickness: 0.03,
                             color: Colors.white24,
                             thicknessUnit: GaugeSizeUnit.factor,
-                            cornerStyle: CornerStyle.startCurve,
+                            cornerStyle: CornerStyle.bothCurve,
                           ),
                           pointers: <GaugePointer>[
                             RangePointer(
                                 color: Colors.white,
                                 value: trackCalorie[index],
-                                width: 0.05,
+                                width: 0.03,
                                 sizeUnit: GaugeSizeUnit.factor,
                                 cornerStyle: CornerStyle.bothCurve)
                           ],
@@ -264,10 +335,22 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('${trackCalorie[index].round()}',
-                            style: gaugeLabel),
-                        Text('out of ${widget.calories[index].round()} kCal',
-                            style: gaugeLabelSub),
+                        LimitedBox(
+                          child: Text('${trackCalorie[index].round()}',
+                              style: TextStyle(
+                                fontSize: constraints.maxHeight * 0.085,
+                                fontFamily: 'Roboto-Bold',
+                                color: Colors.white,
+                              )),
+                        ),
+                        Text(
+                          'out of ${widget.calories[index].round()} kCal',
+                          style: TextStyle(
+                            fontSize: constraints.maxHeight * 0.025,
+                            fontFamily: 'Roboto-Reg',
+                            color: Colors.white.withOpacity(0.5),
+                          ),
+                        ),
                         SizedBox(height: constraints.maxHeight * 0.02),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -316,7 +399,6 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                       children: [
                         SvgPicture.asset(
                           'assets/icons/ios_arrow_left.svg',
-                          color: const Color(0xB31E1E1E),
                           height: 15,
                           width: 15,
                         ),
@@ -356,6 +438,7 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                               if (widget.mealsTime[index].breakfast == true) {
                                 trackCalorie[index] +=
                                     (widget.calories[index] / 3);
+                                save();
                                 setState(() {});
                                 debugPrint(trackCalorie.toString());
                                 widget.mealsTime[index].breakfast = false;
@@ -363,7 +446,8 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                                 showSnackBar(
                                     context,
                                     'You already intook breakfast',
-                                    Colors.black54);
+                                    Colors.black54,
+                                    false);
                               }
                             },
                             constraints: constraints,
@@ -386,19 +470,21 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                                     ));
                               },
                               onTap: () {
-                              if (widget.mealsTime[index].lunch == true) {
-                                trackCalorie[index] +=
-                                    (widget.calories[index] / 3);
-                                setState(() {});
-                                debugPrint(trackCalorie.toString());
-                                widget.mealsTime[index].lunch = false;
-                              } else {
-                                showSnackBar(
-                                    context,
-                                    'You already intook lunch',
-                                    Colors.black54);
-                              }
-                            },
+                                if (widget.mealsTime[index].lunch == true) {
+                                  trackCalorie[index] +=
+                                      (widget.calories[index] / 3);
+                                  save();
+                                  setState(() {});
+
+                                  widget.mealsTime[index].lunch = false;
+                                } else {
+                                  showSnackBar(
+                                      context,
+                                      'You already intook lunch',
+                                      Colors.black54,
+                                      false);
+                                }
+                              },
                               constraints: constraints,
                               title: 'Lunch',
                               subtitle: widget.calories[index].round() / 3,
@@ -419,19 +505,21 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                                 );
                               },
                               onTap: () {
-                              if (widget.mealsTime[index].dinner== true) {
-                                trackCalorie[index] +=
-                                    (widget.calories[index] / 3);
-                                setState(() {});
-                                debugPrint(trackCalorie.toString());
-                                widget.mealsTime[index].dinner = false;
-                              } else {
-                                showSnackBar(
-                                    context,
-                                    'You already intook dinner',
-                                    Colors.black54);
-                              }
-                            },
+                                if (widget.mealsTime[index].dinner == true) {
+                                  trackCalorie[index] +=
+                                      (widget.calories[index] / 3);
+                                  save();
+                                  setState(() {});
+
+                                  widget.mealsTime[index].dinner = false;
+                                } else {
+                                  showSnackBar(
+                                      context,
+                                      'You already intook dinner',
+                                      Colors.black54,
+                                      false);
+                                }
+                              },
                               constraints: constraints,
                               title: 'Dinner',
                               subtitle: widget.calories[index].round() / 3,
@@ -463,15 +551,26 @@ class UserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.009),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(backgroundColor: color!.withOpacity(0.9), radius: 5),
-          const SizedBox(
-            width: 5,
+          CircleAvatar(
+              backgroundColor: color!.withOpacity(0.9),
+              radius: MediaQuery.of(context).size.height * 0.005),
+          SizedBox(
+            width: MediaQuery.of(context).size.height * 0.009,
           ),
-          Text('$label : ${info[index!].round()}', style: theThreeLabels)
+          FittedBox(
+            child: Text(
+              '$label : ${info[index!].round()}',
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.height * 0.016,
+                fontFamily: 'Roboto-Reg',
+                color: Colors.white.withOpacity(0.9),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -522,32 +621,53 @@ class MealsWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SvgPicture.asset(
-                          imgPath,
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          height: constraints.maxHeight * 0.05,
+                          width: constraints.maxWidth * 0.25,
+                          child: SvgPicture.asset(
+                            imgPath,
+                          ),
                         ),
                         SizedBox(
                           height: constraints.maxHeight * 0.01,
                         ),
-                        Text(
-                          title,
-                          style: mealTitle,
+                        LimitedBox(
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                              fontSize: constraints.maxHeight * 0.04,
+                              fontFamily: 'Roboto-Bold',
+                              color: const Color(0xB31E1E1E),
+                            ),
+                          ),
                         ),
-                        Text(
-                          '${subtitle.round()} kCal',
-                          style: mealSub,
+                        LimitedBox(
+                          child: Text('${subtitle.round()} kCal',
+                              style: TextStyle(
+                                fontSize: constraints.maxHeight * 0.02,
+                                fontFamily: 'Roboto-Reg',
+                                color: Color(0xB31E1E1E),
+                              )),
                         )
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 12.0, bottom: 12.0),
+                    padding: EdgeInsets.only(
+                        right: constraints.maxWidth * 0.025,
+                        bottom: constraints.maxHeight * 0.012),
                     child: Align(
                       alignment: Alignment.topRight,
-                      child: CircleAvatar(
-                        backgroundColor: mealBoxAddButtonColor,
-                        child: IconButton(
-                          icon: SvgPicture.asset('assets/icon_plus.svg'),
-                          onPressed: onTap,
+                      child: Container(
+                        height: constraints.maxHeight * 0.05,
+                        width: constraints.maxWidth * 0.1,
+                        child: CircleAvatar(
+                          backgroundColor: mealBoxAddButtonColor,
+                          child: IconButton(
+                            icon: SvgPicture.asset('assets/icon_plus.svg'),
+                            onPressed: onTap,
+                          ),
                         ),
                       ),
                     ),

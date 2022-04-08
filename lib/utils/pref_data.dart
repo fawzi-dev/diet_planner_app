@@ -14,24 +14,24 @@ class PrefData {
   static String keyCalorie = pkgName + "keyCalorie";
   static String isSignedKey = pkgName + "isSignKey";
   static String isGoogleKey = pkgName + "isGoogle";
-  static String isFacebookKey = pkgName + "isFacebookKey";
+  static String isAnony = pkgName + "isAnony";
   static String number = pkgName + "isNumber";
 
   static Future init() async {
     _preferences = await SharedPreferences.getInstance();
   }
-static Future setInt(List<String> tracking) async =>
+
+  static Future setDailyCalorie(List<String> tracking) async =>
       await _preferences?.setStringList(number, tracking);
 
-  static List<String>? getInt() => _preferences?.getStringList(number);
-  
+  static List<String>? getDailyCalorie() => _preferences?.getStringList(number);
+
   static setIsFirstTime(int num) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt(isIntKey, num);
   }
 
-    static int? getIsFirstTime() => _preferences?.getInt(isIntKey);
-
+  static int? getIsFirstTime() => _preferences?.getInt(isIntKey);
 
   addHeight(double sizes) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -79,8 +79,7 @@ static Future setInt(List<String> tracking) async =>
     prefs.setBool(isIntro, isFav);
   }
 
-    static bool? getIsIntro() => _preferences?.getBool(isIntro);
-
+  static bool? getIsIntro() => _preferences?.getBool(isIntro);
 
   static setIsCreatePlan(bool isPlan) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -89,27 +88,27 @@ static Future setInt(List<String> tracking) async =>
 
   static bool? getIsCreatePlan() => _preferences?.getBool(isCreatePage);
 
+  /// Sign in pref data
+  // static isSignedIn(bool isSign) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setBool(isSignedKey, isSign);
+  // }
+  // static bool? getIsSignedIn() => _preferences?.getBool(isSignedKey);
 
- /// Sign in pref data
-  static isSignedIn(bool isSign) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(isSignedKey, isSign);
-  }
-  static bool? getIsSignedIn() => _preferences?.getBool(isSignedKey);
-
-/// google pref data
+  /// google pref data
   static setIsGoogle(bool isGoog) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(isGoogleKey, isGoog);
   }
+
   static bool? getIsGoogle() => _preferences?.getBool(isGoogleKey);
 
-/// facebook pref data
+  /// anonymous user, pref data
 
-   static setIsFacebook(bool isFace) async {
+  static setIsAnony(String isFace) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(isFacebookKey, isFace);
+    prefs.setString(isAnony, isFace);
   }
 
-  static bool? getIsFacebook() => _preferences?.getBool(isFacebookKey);
+  static String? getIsAnony() => _preferences?.getString(isAnony);
 }

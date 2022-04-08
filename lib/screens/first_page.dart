@@ -16,8 +16,10 @@ import '../utils/size_config.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 
+// ignore: must_be_immutable
 class FirstPage extends StatefulWidget {
-  const FirstPage({Key? key}) : super(key: key);
+  FirstPage({Key? key, this.isAnony}) : super(key: key);
+  bool? isAnony;
 
   @override
   _FirstPage createState() {
@@ -28,26 +30,25 @@ class FirstPage extends StatefulWidget {
 class _FirstPage extends State<FirstPage> {
   int _position = 0;
   int _genderPosition = 0;
+  int _userGoalPosition = 0;
   int _motivatePosition = 0;
-  int userPrefPosition = 0;
+  // int userPrefPosition = 0;
   int conditionPosition = 0;
   double tabHeight = 0;
   double tabWidth = 0;
   double tabRadius = 0;
   double targetCalorie = 0;
-  double lbs1Value = 0.45359237;
+
   double? margin;
 
   List<String> selectMealList = [];
-  List<DietModel> mealList = DataFile.getMealList();
-  List<DietModel> dietList = DataFile.getDietList();
   List<DietModel> motivateList = DataFile.increaseWeightGoal();
   List<DietModel> getGender = DataFile.getGender();
   List<DietModel> getUserPref = DataFile.getUsersPreferences();
   List<DietModel> condition = DataFile.conditionConcerned();
 
-  int cm = 120;
-  double kg1 = 45;
+  int cm = 150;
+  double kg1 = 60;
   double kg2 = 0.5;
   int age = 20;
 
@@ -140,6 +141,19 @@ class _FirstPage extends State<FirstPage> {
                         _position++;
                         setState(() {});
                       } else {
+
+                        List<double> trackCalorie = [
+                          0.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                          0.0,
+                          0.0
+                        ];
+                        List<String> myListOfStrings = trackCalorie.map((i) => i.toString()).toList();
+                        PrefData.setDailyCalorie(myListOfStrings);
+
                         PrefData.setIsFirstTime(3);
                         // Navigator.of(context).pop(true);
 
@@ -164,7 +178,7 @@ class _FirstPage extends State<FirstPage> {
                               5;
 
                           /// check for weights
-                          if (_genderPosition == 0) {
+                          if (_userGoalPosition == 0) {
                             finalBmr = targetCalorie + (kg2 * 500);
                           } else {
                             finalBmr = targetCalorie - (kg2 * 500);
@@ -177,7 +191,7 @@ class _FirstPage extends State<FirstPage> {
                               161;
 
                           /// check for weights
-                          if (_genderPosition == 0) {
+                          if (_userGoalPosition==0) {
                             finalBmr = targetCalorie + (kg2 * 500);
                           } else {
                             finalBmr = targetCalorie - (kg2 * 500);
@@ -224,6 +238,7 @@ class _FirstPage extends State<FirstPage> {
   }
 
   getPositionWidget() {
+    widget.isAnony == true ? widgetList.add(setAnony()) : null;
     widgetList.add(firstWidget());
     widgetList.add(ageWidget());
     widgetList.add(heightWidget());
@@ -251,11 +266,11 @@ class _FirstPage extends State<FirstPage> {
                 itemCount: getUserPref.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
-                  bool isSelect = (index == _genderPosition);
+                  bool isSelect = (index == _userGoalPosition);
                   return InkWell(
                     onTap: () {
                       setState(() {
-                        _genderPosition = index;
+                        _userGoalPosition = index;
                       });
                     },
                     child: Container(
@@ -316,7 +331,8 @@ class _FirstPage extends State<FirstPage> {
     List<IconData> icons = [
       FontAwesomeIcons.heartBroken,
       Icons.no_food_rounded,
-      Icons.no_drinks_rounded
+      Icons.no_drinks_rounded,
+      Icons.health_and_safety_rounded
     ];
 
     SizeConfig().init(context);
@@ -478,6 +494,77 @@ class _FirstPage extends State<FirstPage> {
     );
   }
 
+  Widget setAnony() {
+    TextEditingController setAnony = TextEditingController();
+
+    return StatefulBuilder(
+      builder: (context, setState) => Container(
+        margin: EdgeInsets.all(margin!),
+        child: Stack(
+          children: [
+            getHeaderText(
+              'What should we call you?',
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: getScreenPercentSize(context, 5)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: (margin!)),
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IntrinsicWidth(
+                            child: TextField(
+                              maxLines: 1,
+                              controller: setAnony,
+                              cursorColor: primaryColor,
+                              textAlign: TextAlign.end,
+                              textAlignVertical: TextAlignVertical.bottom,
+                              keyboardType: TextInputType.name,
+                              maxLength: 15,
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontSize: getScreenPercentSize(context, 4),
+                                  fontFamily: ConstantData.fontFamily,
+                                  fontWeight: FontWeight.w500),
+                              decoration: InputDecoration(
+                                fillColor: Colors.red,
+                                filled: false,
+                                hintText: "Name",
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: getScreenPercentSize(context, 4),
+                                    fontFamily: ConstantData.fontFamily,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              onChanged: (value) {
+                                PrefData.setIsAnony(value);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getScreenPercentSize(context, 0.5),
+                  ),
+                  // getTabWidget(setState)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget heightWidget() {
     TextEditingController textEditingController =
         TextEditingController(text: cm.toString());
@@ -574,12 +661,6 @@ class _FirstPage extends State<FirstPage> {
         } else if (types == 'kg2') {
           kg2 = value.isNotEmpty ? double.parse(value) : 0;
         }
-        debugPrint('CM' +
-            cm.toString() +
-            '\nC-KG1 ' +
-            kg1.toString() +
-            '\nC-KG2 ' +
-            kg2.toString());
       },
     );
   }
@@ -599,8 +680,8 @@ class _FirstPage extends State<FirstPage> {
               child: NumberPicker(
                 value: age,
                 itemHeight: getScreenPercentSize(context, 12),
-                minValue: 18,
-                maxValue: 350,
+                minValue: 19,
+                maxValue: 50,
                 textStyle: TextStyle(
                     fontSize: getScreenPercentSize(context, 5),
                     color: Colors.black,
@@ -646,7 +727,7 @@ class _FirstPage extends State<FirstPage> {
                         IntrinsicWidth(
                           child: getTextField(
                               TextEditingController(
-                                text: kg1.toString(),
+                                text: kg1.round().toStringAsFixed(0),
                               ),
                               'kg1'),
                         ),

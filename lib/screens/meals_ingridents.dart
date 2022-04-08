@@ -23,7 +23,8 @@ class DishDetailPage extends StatefulWidget {
       required this.id,
       required this.protein,
       required this.carbo,
-      required this.fat,required this.appBarTitle})
+      required this.fat,
+      required this.appBarTitle})
       : super(key: key);
 
   @override
@@ -100,6 +101,7 @@ class _DishDetailPage extends State<DishDetailPage> {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Card(
+                          shadowColor: Colors.black12,
                           color: backgroundColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
@@ -120,14 +122,14 @@ class _DishDetailPage extends State<DishDetailPage> {
                                     widget.protein.round().toString()),
                                 Container(
                                   height: getPercentSize(viewHeight, 35),
-                                  color: textColor,
+                                  color: Colors.black26,
                                   width: 1,
                                 ),
                                 getCell(viewHeight, Colors.amber, "Fat",
                                     widget.fat.round().toString()),
                                 Container(
                                   height: getPercentSize(viewHeight, 35),
-                                  color: textColor,
+                                  color: Colors.black26,
                                   width: 1,
                                 ),
                                 getCell(viewHeight, Colors.blueAccent, "Carbs",

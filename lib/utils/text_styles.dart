@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-const welcomeText = TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
+const welcomeText = TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Color.fromARGB(181, 29, 31, 31));
 
 const hintText = TextStyle(fontSize: 15, color: Colors.black54);
 

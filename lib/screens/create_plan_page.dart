@@ -120,7 +120,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
                                     FontWeight.bold,
                                     getPercentSize(progressHeight, 15)),
                                 getTextWidget(
-                                    "Please wait..",
+                                    "Please wait...",
                                     subTextColor,
                                     TextAlign.center,
                                     FontWeight.w600,

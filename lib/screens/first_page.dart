@@ -248,6 +248,81 @@ class _FirstPage extends State<FirstPage> {
     widgetList.add(conditionConcern());
   }
 
+  Widget genderWidget() {
+    SizeConfig().init(context);
+    return StatefulBuilder(
+      builder: (context, setState) => Container(
+        height: double.infinity,
+        width: double.infinity,
+        margin: EdgeInsets.all(margin!),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            getHeaderText("Choose your gender"),
+            Expanded(
+              child: ListView.builder(
+                itemCount: getGender.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  bool isSelect = (index == _genderPosition);
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        _genderPosition = index;
+                        debugPrint(_genderPosition.toString());
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: (margin! / 2)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: (margin!), vertical: (margin!)),
+                      decoration: BoxDecoration(
+                          color: isSelect ? primaryColor : Colors.transparent,
+                          borderRadius: BorderRadius.all(Radius.circular(
+                              getScreenPercentSize(context, 1.5))),
+                          border: Border.all(
+                              color: isSelect
+                                  ? Colors.transparent
+                                  : subTextColor.withOpacity(0.1),
+                              width: 1.5)),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            ConstantData.assetsPath +
+                                getGender[index].subTitle!,
+                            height: getScreenPercentSize(context, 8),
+                          ),
+                          SizedBox(
+                            width: margin,
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                getTextWidget(
+                                    getGender[index].title!,
+                                    isSelect ? Colors.white : textColor,
+                                    TextAlign.start,
+                                    FontWeight.bold,
+                                    getScreenPercentSize(context, 1.8)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget getUserPrefs() {
     SizeConfig().init(context);
 
@@ -414,7 +489,7 @@ class _FirstPage extends State<FirstPage> {
     );
   }
 
-  Widget increaseWeight() {
+  Widget goalWeightWidget() {
     SizeConfig().init(context);
 
     return StatefulBuilder(
@@ -494,8 +569,8 @@ class _FirstPage extends State<FirstPage> {
     );
   }
 
-  Widget setAnony() {
-    TextEditingController setAnony = TextEditingController();
+  Widget anonymousWidget() {
+    TextEditingController anonymousWidget = TextEditingController();
 
     return StatefulBuilder(
       builder: (context, setState) => Container(

@@ -1,9 +1,5 @@
-//This file will handle all our API calls to the
-//Spoonacular API
-
 import 'dart:convert';
 import 'dart:io';
-import 'package:diet_planner_app/main.dart';
 import 'package:diet_planner_app/models/daily_plans_models.dart';
 import 'package:diet_planner_app/models/ingredients.dart';
 import 'package:flutter/material.dart';

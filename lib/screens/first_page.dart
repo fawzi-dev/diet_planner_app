@@ -63,9 +63,6 @@ class _FirstPage extends State<FirstPage> {
       } else {
         SystemNavigator.pop();
       }
-      // Future.delayed(const Duration(milliseconds: 200), () {
-      //   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-      // });
     }
 
     return Future.value(false);
@@ -87,6 +84,7 @@ class _FirstPage extends State<FirstPage> {
       getPositionWidget();
     }
     setState(() {});
+
     return WillPopScope(
         child: Scaffold(
           backgroundColor: cellColor,
@@ -141,7 +139,6 @@ class _FirstPage extends State<FirstPage> {
                         _position++;
                         setState(() {});
                       } else {
-
                         List<double> trackCalorie = [
                           0.0,
                           0.0,
@@ -151,7 +148,8 @@ class _FirstPage extends State<FirstPage> {
                           0.0,
                           0.0
                         ];
-                        List<String> myListOfStrings = trackCalorie.map((i) => i.toString()).toList();
+                        List<String> myListOfStrings =
+                            trackCalorie.map((i) => i.toString()).toList();
                         PrefData.setDailyCalorie(myListOfStrings);
 
                         PrefData.setIsFirstTime(3);
@@ -160,16 +158,13 @@ class _FirstPage extends State<FirstPage> {
                         // current weight
                         double currentWeight = kg1;
                         // target weight
-                        double goalWeight = kg2;
-
-                        double resultOfWeights = 0;
 
                         // final BMR results
                         double finalBmr = 0.0;
 
-                        PrefData().addHeight(cm.toDouble());
-                        PrefData().addWeight(kg1);
+                        
 
+                        // IF MALE THIS STATEMENT WILL EXECUTE
                         if (_genderPosition == 0) {
                           //tagret calorie
                           targetCalorie = (10 * currentWeight) +
@@ -177,29 +172,32 @@ class _FirstPage extends State<FirstPage> {
                               (5 * age) +
                               5;
 
-                          /// check for weights
+                          /// checking whether user wants to gain or lose weight
                           if (_userGoalPosition == 0) {
                             finalBmr = targetCalorie + (kg2 * 500);
                           } else {
                             finalBmr = targetCalorie - (kg2 * 500);
                           }
-                        } else {
+                        }
+                        // IF FEMALE THIS STATEMENT WILL EXECUTE
+                        else {
                           //tagret calorie
                           targetCalorie = (10 * currentWeight) +
                               (6.25 * cm) -
                               (5 * age) -
                               161;
 
-                          /// check for weights
-                          if (_userGoalPosition==0) {
+                          /// checking whether user wants to gain or lose weight
+                          if (_userGoalPosition == 0) {
                             finalBmr = targetCalorie + (kg2 * 500);
                           } else {
                             finalBmr = targetCalorie - (kg2 * 500);
                           }
                         }
 
-                        PrefData().addCalories(finalBmr);
-                        PrefData.setIsCreatePlan(false);
+                        PrefData().setCalorie(finalBmr);
+
+                        // On finished go to create page plan
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -237,17 +235,20 @@ class _FirstPage extends State<FirstPage> {
         onWillPop: _requestPop);
   }
 
+  // List of all widgets (screens)
   getPositionWidget() {
-    widget.isAnony == true ? widgetList.add(setAnony()) : null;
-    widgetList.add(firstWidget());
+    // if user is anonymous then they must proide a name otherwise this postion is null
+    widget.isAnony == true ? widgetList.add(anonymousWidget()) : null;
+    widgetList.add(genderWidget());
     widgetList.add(ageWidget());
     widgetList.add(heightWidget());
     widgetList.add(weightWidget());
     widgetList.add(getUserPrefs());
-    widgetList.add(increaseWeight());
+    widgetList.add(goalWeightWidget());
     widgetList.add(conditionConcern());
   }
 
+  // Screens
   Widget genderWidget() {
     SizeConfig().init(context);
     return StatefulBuilder(
@@ -323,9 +324,155 @@ class _FirstPage extends State<FirstPage> {
     );
   }
 
+  Widget ageWidget() {
+    return StatefulBuilder(
+      builder: (context, setState) => Container(
+        color: cellColor,
+        margin: EdgeInsets.all(margin!),
+        child: Stack(
+          children: [
+            getHeaderText(
+              "How old are you?",
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: NumberPicker(
+                value: age,
+                itemHeight: getScreenPercentSize(context, 12),
+                minValue: 19,
+                maxValue: 50,
+                textStyle: TextStyle(
+                    fontSize: getScreenPercentSize(context, 5),
+                    color: Colors.black,
+                    fontFamily: ConstantData.fontFamily),
+                selectedTextStyle: TextStyle(
+                    fontSize: getScreenPercentSize(context, 8),
+                    color: primaryColor,
+                    fontFamily: ConstantData.fontFamily),
+                step: 1,
+                haptics: true,
+                onChanged: (value) => setState(() {
+                  age = value;
+                }),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget heightWidget() {
+    TextEditingController textEditingController =
+        TextEditingController(text: cm.toString());
+
+    return StatefulBuilder(
+      builder: (context, setState) => Container(
+        margin: EdgeInsets.all(margin!),
+        child: Stack(
+          children: [
+            getHeaderText(
+              'How tall are you?',
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: getScreenPercentSize(context, 5)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: (margin!)),
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IntrinsicWidth(
+                            child: getTextField(textEditingController, 'cm'),
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          getTextWidget(
+                              "Cm",
+                              subTextColor,
+                              TextAlign.end,
+                              FontWeight.w600,
+                              getScreenPercentSize(context, 2)),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: getScreenPercentSize(context, 0.5),
+                  ),
+                  // getTabWidget(setState)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget weightWidget() {
+    return StatefulBuilder(
+      builder: (context, setState) => Container(
+        margin: EdgeInsets.all(margin!),
+        child: Stack(
+          children: [
+            getHeaderText(
+              "What's your current\nweight?",
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: getScreenPercentSize(context, 5)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: (margin!)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IntrinsicWidth(
+                          child: getTextField(
+                              TextEditingController(
+                                text: kg1.round().toStringAsFixed(0),
+                              ),
+                              'kg1'),
+                        ),
+                        const SizedBox(
+                          width: 3,
+                        ),
+                        getTextWidget("Kg", subTextColor, TextAlign.end,
+                            FontWeight.w600, getScreenPercentSize(context, 2)),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: getScreenPercentSize(context, 0.5),
+                  ),
+                  // getWeightTabWidget(setState)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget getUserPrefs() {
     SizeConfig().init(context);
-
     return StatefulBuilder(
       builder: (context, setState) => Container(
         height: double.infinity,
@@ -382,6 +529,86 @@ class _FirstPage extends State<FirstPage> {
                               children: [
                                 getTextWidget(
                                     getUserPref[index].title!,
+                                    isSelect ? Colors.white : textColor,
+                                    TextAlign.start,
+                                    FontWeight.bold,
+                                    getScreenPercentSize(context, 2.4)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget goalWeightWidget() {
+    SizeConfig().init(context);
+
+    return StatefulBuilder(
+      builder: (context, setState) => Container(
+        height: double.infinity,
+        width: double.infinity,
+        margin: EdgeInsets.all(margin!),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            getHeaderText("How many kilograms?"),
+            Expanded(
+              child: ListView.builder(
+                itemCount: motivateList.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  bool isSelect = (index == _motivatePosition);
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        _motivatePosition = index;
+                        kg2 = double.parse(motivateList[index].title!);
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                        vertical: (margin! / 2),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: (margin!), vertical: (margin!)),
+                      decoration: BoxDecoration(
+                        color: isSelect ? primaryColor : Colors.transparent,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            getScreenPercentSize(context, 1.5),
+                          ),
+                        ),
+                        border: Border.all(
+                            color: isSelect
+                                ? Colors.transparent
+                                : subTextColor.withOpacity(0.1),
+                            width: 1.5),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(FontAwesomeIcons.weightHanging,
+                              color:
+                                  (isSelect) ? Colors.black54 : Colors.black26),
+                          SizedBox(
+                            width: margin,
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                getTextWidget(
+                                    '${motivateList[index].title!} Kg',
                                     isSelect ? Colors.white : textColor,
                                     TextAlign.start,
                                     FontWeight.bold,
@@ -489,86 +716,6 @@ class _FirstPage extends State<FirstPage> {
     );
   }
 
-  Widget goalWeightWidget() {
-    SizeConfig().init(context);
-
-    return StatefulBuilder(
-      builder: (context, setState) => Container(
-        height: double.infinity,
-        width: double.infinity,
-        margin: EdgeInsets.all(margin!),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            getHeaderText("How many kilograms?"),
-            Expanded(
-              child: ListView.builder(
-                itemCount: motivateList.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  bool isSelect = (index == _motivatePosition);
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        _motivatePosition = index;
-                        kg2 = double.parse(motivateList[index].title!);
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: (margin! / 2),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: (margin!), vertical: (margin!)),
-                      decoration: BoxDecoration(
-                        color: isSelect ? primaryColor : Colors.transparent,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            getScreenPercentSize(context, 1.5),
-                          ),
-                        ),
-                        border: Border.all(
-                            color: isSelect
-                                ? Colors.transparent
-                                : subTextColor.withOpacity(0.1),
-                            width: 1.5),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(FontAwesomeIcons.weightHanging,
-                              color:
-                                  (isSelect) ? Colors.black54 : Colors.black26),
-                          SizedBox(
-                            width: margin,
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                getTextWidget(
-                                    '${motivateList[index].title!} Kg',
-                                    isSelect ? Colors.white : textColor,
-                                    TextAlign.start,
-                                    FontWeight.bold,
-                                    getScreenPercentSize(context, 2.4)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget anonymousWidget() {
     TextEditingController anonymousWidget = TextEditingController();
 
@@ -596,7 +743,7 @@ class _FirstPage extends State<FirstPage> {
                           IntrinsicWidth(
                             child: TextField(
                               maxLines: 1,
-                              controller: setAnony,
+                              controller: anonymousWidget,
                               cursorColor: primaryColor,
                               textAlign: TextAlign.end,
                               textAlignVertical: TextAlignVertical.bottom,
@@ -640,66 +787,7 @@ class _FirstPage extends State<FirstPage> {
     );
   }
 
-  Widget heightWidget() {
-    TextEditingController textEditingController =
-        TextEditingController(text: cm.toString());
-
-    return StatefulBuilder(
-      builder: (context, setState) => Container(
-        margin: EdgeInsets.all(margin!),
-        child: Stack(
-          children: [
-            getHeaderText(
-              'How tall are you?',
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: getScreenPercentSize(context, 5)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: (margin!)),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          IntrinsicWidth(
-                            child: getTextField(textEditingController, 'cm'),
-                          ),
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          getTextWidget(
-                              "Cm",
-                              subTextColor,
-                              TextAlign.end,
-                              FontWeight.w600,
-                              getScreenPercentSize(context, 2)),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const SizedBox(
-                            width: 3,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: getScreenPercentSize(context, 0.5),
-                  ),
-                  // getTabWidget(setState)
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
+  // Textfields and Labels
   getTextField(TextEditingController editingController, String types) {
     return TextField(
       maxLines: 1,
@@ -740,93 +828,6 @@ class _FirstPage extends State<FirstPage> {
     );
   }
 
-  Widget ageWidget() {
-    return StatefulBuilder(
-      builder: (context, setState) => Container(
-        color: cellColor,
-        margin: EdgeInsets.all(margin!),
-        child: Stack(
-          children: [
-            getHeaderText(
-              "How old are you?",
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: NumberPicker(
-                value: age,
-                itemHeight: getScreenPercentSize(context, 12),
-                minValue: 19,
-                maxValue: 50,
-                textStyle: TextStyle(
-                    fontSize: getScreenPercentSize(context, 5),
-                    color: Colors.black,
-                    fontFamily: ConstantData.fontFamily),
-                selectedTextStyle: TextStyle(
-                    fontSize: getScreenPercentSize(context, 8),
-                    color: primaryColor,
-                    fontFamily: ConstantData.fontFamily),
-                step: 1,
-                haptics: true,
-                onChanged: (value) => setState(() {
-                  age = value;
-                }),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget weightWidget() {
-    return StatefulBuilder(
-      builder: (context, setState) => Container(
-        margin: EdgeInsets.all(margin!),
-        child: Stack(
-          children: [
-            getHeaderText(
-              "What's your current\nweight?",
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: getScreenPercentSize(context, 5)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: (margin!)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IntrinsicWidth(
-                          child: getTextField(
-                              TextEditingController(
-                                text: kg1.round().toStringAsFixed(0),
-                              ),
-                              'kg1'),
-                        ),
-                        const SizedBox(
-                          width: 3,
-                        ),
-                        getTextWidget("Kg", subTextColor, TextAlign.end,
-                            FontWeight.w600, getScreenPercentSize(context, 2)),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: getScreenPercentSize(context, 0.5),
-                  ),
-                  // getWeightTabWidget(setState)
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   getHeaderText(String s) {
     return Align(
       alignment: Alignment.topCenter,
@@ -835,81 +836,6 @@ class _FirstPage extends State<FirstPage> {
             EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 4)),
         child: getTextWidget(s, textColor, TextAlign.center, FontWeight.bold,
             getScreenPercentSize(context, 3)),
-      ),
-    );
-  }
-
-  Widget firstWidget() {
-    SizeConfig().init(context);
-    return StatefulBuilder(
-      builder: (context, setState) => Container(
-        height: double.infinity,
-        width: double.infinity,
-        margin: EdgeInsets.all(margin!),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            getHeaderText("Tell us about your self?"),
-            Expanded(
-              child: ListView.builder(
-                itemCount: getGender.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) {
-                  bool isSelect = (index == _genderPosition);
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        _genderPosition = index;
-                        debugPrint(_genderPosition.toString());
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: (margin! / 2)),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: (margin!), vertical: (margin!)),
-                      decoration: BoxDecoration(
-                          color: isSelect ? primaryColor : Colors.transparent,
-                          borderRadius: BorderRadius.all(Radius.circular(
-                              getScreenPercentSize(context, 1.5))),
-                          border: Border.all(
-                              color: isSelect
-                                  ? Colors.transparent
-                                  : subTextColor.withOpacity(0.1),
-                              width: 1.5)),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            ConstantData.assetsPath +
-                                getGender[index].subTitle!,
-                            height: getScreenPercentSize(context, 8),
-                          ),
-                          SizedBox(
-                            width: margin,
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                getTextWidget(
-                                    getGender[index].title!,
-                                    isSelect ? Colors.white : textColor,
-                                    TextAlign.start,
-                                    FontWeight.bold,
-                                    getScreenPercentSize(context, 1.8)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

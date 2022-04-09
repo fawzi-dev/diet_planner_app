@@ -14,28 +14,17 @@ import '../utils/pref_data.dart';
 import '../utils/size_config.dart';
 
 class IntroPage extends StatefulWidget {
-  // final ValueChanged<bool> onChanged;
-
-  // IntroPage(this.onChanged);
-
+  
   @override
   _IntroPage createState() {
     return _IntroPage();
-    // return _IntroPage(this.onChanged);
   }
 }
 
 class _IntroPage extends State<IntroPage> {
   int _position = 0;
 
-  // final ValueChanged<bool> onChanged;
-
-  // _IntroPage(this.onChanged);
-
   Future<bool> _requestPop() {
-    //   Future.delayed(const Duration(milliseconds: 200), () {
-    //     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-    //   });
 
     if (Platform.isIOS) {
       exit(0);
@@ -43,7 +32,7 @@ class _IntroPage extends State<IntroPage> {
       SystemNavigator.pop();
     }
 
-    return new Future.value(false);
+    return Future.value(false);
   }
 
   final controller = PageController();
@@ -162,58 +151,22 @@ class _IntroPage extends State<IntroPage> {
                             height: firstHeight,
                             padding: EdgeInsets.all(
                                 getScreenPercentSize(context, 10)),
-                            // decoration: BoxDecoration(
-
-                            // color: Colors.black,
-                            // image: DecorationImage(
-                            //   // colorFilter: new ColorFilter.mode(
-                            //   //     Colors.black.withOpacity(0.5),
-                            //   //     BlendMode.dstATop),
-                            //   image: ExactAssetImage(
-                            //       introModelList[position].image!),
-                            //   fit: BoxFit.cover,
-                            // ),
-                            // ),
+                            
 
                             child: Image.asset(introModelList[position].image!),
                           ),
-                          // Align(
-                          //   alignment: Alignment.bottomCenter,
-                          //   child: Container(
-                          //     width: double.infinity,
-                          //
-                          //     height: getScreenPercentSize(context, 70),
-                          //     decoration: BoxDecoration(
-                          //         gradient: LinearGradient(colors: [
-                          //       Colors.white,
-                          //       Colors.white,
-                          //       Colors.white70,
-                          //       Colors.white60,
-                          //       Colors.white54,
-                          //       Colors.white38,
-                          //       Colors.white38,
-                          //       Colors.white10,
-                          //       Colors.transparent
-                          //     ], end: const Alignment(0.0, -1),
-                          //           begin: const Alignment(0.0, 0.6), )),
-                          //   ),
-                          // ),
+                          
                           Container(
                             margin: EdgeInsets.only(top: firstHeight),
 
-                            // decoration: BoxDecoration(
-                            //   color: primaryColor,
-                            //   borderRadius: BorderRadius.only(topRight: Radius.circular(radius),topLeft: Radius.circular(radius))
-                            // ),
+                            
                             padding: EdgeInsets.all(
                                 MediaQuery.of(context).size.height * 0.03),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                // Container(
-                                //   height: imageSize,
-                                // ),
+                                
                                 Padding(
                                   padding: EdgeInsets.all(defMargin),
                                   child: getCustomText(

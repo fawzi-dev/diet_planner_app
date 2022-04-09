@@ -1,11 +1,6 @@
 import 'package:diet_planner_app/models/api_calls.dart';
 import 'package:diet_planner_app/models/ingredients.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-
 import '../utils/constant_data.dart';
 import '../utils/constant_widget.dart';
 
@@ -38,7 +33,6 @@ class _DishDetailPage extends State<DishDetailPage> {
     Navigator.of(context).pop();
   }
 
-  // late String img;
   late List<String>? name;
   late List<String>? unit;
   late List<double>? value;
@@ -47,19 +41,16 @@ class _DishDetailPage extends State<DishDetailPage> {
     Ingredients ingredients;
     ingredients = await ApiService.instance.getIngridents(id: widget.id);
     for (var element in ingredients.ingredients!) {
-      //img = element.image!;
       name!.add(element.name!);
       unit!.add(element.amount!.metric!.unit!);
       value!.add(element.amount!.metric!.value!);
-      // getList(name!);
-      // amountUnit = element.amount!.metric!.unit!;
+
     }
     setState(() {});
   }
 
   @override
   void initState() {
-    //img = '';
     name = [];
     unit = [];
     value = [];
@@ -71,7 +62,6 @@ class _DishDetailPage extends State<DishDetailPage> {
   Widget build(BuildContext context) {
     double margin = getScreenPercentSize(context, 2);
     double height = getScreenPercentSize(context, 30);
-    double horizontalMargin = getScreenPercentSize(context, 3.5);
     double viewHeight = getScreenPercentSize(context, 12);
 
     return WillPopScope(
@@ -191,12 +181,7 @@ class _DishDetailPage extends State<DishDetailPage> {
     // double size = getScreenPercentSize(context, 2.8);
 
     return
-        // Card(
-        //   color: cellColor,
-        //   shape: RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.circular(7),
-        //   ),
-        //   child:
+    
 
         ListView.builder(
       shrinkWrap: true,

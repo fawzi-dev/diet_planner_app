@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../utils/colors.dart';
+import '../utils/constant_widget.dart';
 import '../utils/text_styles.dart';
 import 'edit_profile_page.dart';
 import 'package:restart_app/restart_app.dart';
@@ -336,21 +337,13 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         LimitedBox(
-                          child: Text('${trackCalorie[index].round()}',
-                              style: TextStyle(
-                                fontSize: constraints.maxHeight * 0.085,
-                                fontFamily: 'Roboto-Bold',
-                                color: Colors.white,
-                              )),
+                          child: getCalorieLabel(
+                              trackCalorie[index].round().toString(),
+                              constraints),
                         ),
-                        Text(
-                          'out of ${widget.calories[index].round()} kCal',
-                          style: TextStyle(
-                            fontSize: constraints.maxHeight * 0.025,
-                            fontFamily: 'Roboto-Reg',
-                            color: Colors.white.withOpacity(0.5),
-                          ),
-                        ),
+                        getCalorieSubtitle(
+                            widget.calories[index].round().toString(),
+                            constraints),
                         SizedBox(height: constraints.maxHeight * 0.02),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -647,7 +640,7 @@ class MealsWidget extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: constraints.maxHeight * 0.02,
                                 fontFamily: 'Roboto-Reg',
-                                color: Color(0xB31E1E1E),
+                                color: const Color(0xB31E1E1E),
                               )),
                         )
                       ],
@@ -659,7 +652,7 @@ class MealsWidget extends StatelessWidget {
                         bottom: constraints.maxHeight * 0.012),
                     child: Align(
                       alignment: Alignment.topRight,
-                      child: Container(
+                      child: SizedBox(
                         height: constraints.maxHeight * 0.05,
                         width: constraints.maxWidth * 0.1,
                         child: CircleAvatar(

@@ -25,61 +25,7 @@ class DataFile {
     return introList;
   }
 
-  // static getMealList() {
-  //   List<DietModel> list = [];
 
-  //   DietModel model = DietModel();
-  //   model.title = "Breakfast";
-  //   model.image = "imoji_6.png";
-  //   list.add(model);
-
-  //   model = DietModel();
-  //   model.title = "Snack";
-  //   model.image = "imoji_7.png";
-  //   list.add(model);
-
-  //   model = DietModel();
-  //   model.title = "Lunch";
-  //   model.image = "imoji_8.png";
-  //   list.add(model);
-
-  //   model = DietModel();
-  //   model.title = "Dinner";
-  //   model.image = "imoji_9.png";
-  //   list.add(model);
-
-  //   return list;
-  // }
-
-  // static getDietList() {
-  //   List<DietModel> list = [];
-
-  //   DietModel model = DietModel();
-  //   model.title = "Standard";
-  //   model.subTitle = "I eat everything";
-  //   model.image = "imoji_1.png";
-  //   list.add(model);
-
-  //   model = DietModel();
-  //   model.title = "Vegetarian";
-  //   model.subTitle = "I can't eat meat and seafood";
-  //   model.image = "imoji_2.png";
-  //   list.add(model);
-
-  //   model = DietModel();
-  //   model.title = "Vegan";
-  //   model.image = "imoji_3.png";
-  //   model.subTitle = "I can't eat animal Product";
-  //   list.add(model);
-
-  //   model = DietModel();
-  //   model.title = "Pescatarian";
-  //   model.subTitle = "Vegetarian plus seafood";
-  //   model.image = "imoji_4.png";
-  //   list.add(model);
-
-  //   return list;
-  // }
 
   static getGender() {
     List<DietModel> list = [];

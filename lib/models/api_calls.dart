@@ -17,13 +17,7 @@ class ApiService {
   // ignore: constant_identifier_names
   static const String API_KEY = "61f7f072649243ab892b1cfcb8f8ce81";
 
-  //We create async function to generate meal plan which takes in
-  //timeFrame, targetCalories, diet and apiKey
-
-  //If diet is none, we set the diet into an empty string
-
-  //timeFrame parameter sets our meals into 3 meals, which are daily meals.
-  //that's why it's set to day
+  // an async function to create  diet based on (targetCalorie) BMR
 
   generateMealsPlans({required int targetCalories}) async {
     //check if diet is null
@@ -33,7 +27,9 @@ class ApiService {
       'apiKey': API_KEY,
     };
 
+    // a variable to check if user is connected to internet
     var connectivityResult = await Connectivity().checkConnectivity();
+
     //The Uri consists of the base url, the endpoint we are going to use. It has also
     //parameters
     Uri uri;
@@ -71,14 +67,15 @@ class ApiService {
         }
       } catch (err) {
         //If our response has error, we throw an error message
-       print('The Exception code '+err.hashCode.toString());
+        print('The Exception code ' + err.hashCode.toString());
       }
     }
   }
 
+// an async function to get ingredients
   getIngridents({required int id}) async {
-    String apiLink =
-        'https://api.spoonacular.com/recipes/$id/ingredientWidget.json?apiKey=61f7f072649243ab892b1cfcb8f8ce81';
+    // API link with params to get ingredients based on ID
+    String apiLink ='https://api.spoonacular.com/recipes/$id/ingredientWidget.json?apiKey=$API_KEY';
 
     try {
       //http.get to retrieve the response

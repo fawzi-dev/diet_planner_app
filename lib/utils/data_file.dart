@@ -4,6 +4,7 @@ import '../models/diet_model.dart';
 import '../models/intro_model.dart';
 
 class DataFile {
+
   static List<IntroModel> getIntroModel(BuildContext context) {
     List<IntroModel> introList = [];
 
@@ -11,8 +12,7 @@ class DataFile {
     mainModel.id = 1;
     mainModel.name = "Welcome!";
     mainModel.image = "assets/images/img_1.0.png";
-    mainModel.desc =
-        "You don't need to worry about your diet plan anymore in this app you will be guided correctly to gain or lose your weight.";
+    mainModel.desc ="You don't need to worry about your diet plan anymore in this app you will be guided correctly to gain or lose your weight.";
     introList.add(mainModel);
 
     mainModel = IntroModel();

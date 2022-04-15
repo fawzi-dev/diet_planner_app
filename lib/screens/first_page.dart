@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:diet_planner_app/screens/create_plan_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:numberpicker/numberpicker.dart';
-
 import '../models/diet_model.dart';
 import '../utils/constant_data.dart';
 import '../utils/constant_widget.dart';
@@ -19,7 +17,7 @@ final user = FirebaseAuth.instance.currentUser;
 // ignore: must_be_immutable
 class FirstPage extends StatefulWidget {
   FirstPage({Key? key, this.isAnony}) : super(key: key);
-  bool? isAnony;
+  bool? isAnony; // agar buttoni anony = true
 
   @override
   _FirstPage createState() {
@@ -32,16 +30,13 @@ class _FirstPage extends State<FirstPage> {
   int _genderPosition = 0;
   int _userGoalPosition = 0;
   int _motivatePosition = 0;
-  // int userPrefPosition = 0;
   int conditionPosition = 0;
   double tabHeight = 0;
   double tabWidth = 0;
   double tabRadius = 0;
   double targetCalorie = 0;
-
   double? margin;
 
-  List<String> selectMealList = [];
   List<DietModel> motivateList = DataFile.increaseWeightGoal();
   List<DietModel> getGender = DataFile.getGender();
   List<DietModel> getUserPref = DataFile.getUsersPreferences();
@@ -80,6 +75,7 @@ class _FirstPage extends State<FirstPage> {
     SizeConfig().init(context);
     double defMargin = getScreenPercentSize(context, 2);
     margin = getScreenPercentSize(context, 2);
+
     if (widgetList.isEmpty) {
       getPositionWidget();
     }
@@ -136,7 +132,7 @@ class _FirstPage extends State<FirstPage> {
                         )),
                     onTap: () async {
                       if (_position < (widgetList.length - 1)) {
-                        _position++;
+                        _position++; // 7 | 7
                         setState(() {});
                       } else {
                         List<double> trackCalorie = [
@@ -148,8 +144,8 @@ class _FirstPage extends State<FirstPage> {
                           0.0,
                           0.0
                         ];
-                        List<String> myListOfStrings =
-                            trackCalorie.map((i) => i.toString()).toList();
+
+                        List<String> myListOfStrings =trackCalorie.map((i) => i.toString()).toList();
                         PrefData.setDailyCalorie(myListOfStrings);
 
                         PrefData.setIsFirstTime(3);
@@ -162,9 +158,7 @@ class _FirstPage extends State<FirstPage> {
                         // final BMR results
                         double finalBmr = 0.0;
 
-                        
-
-                        // IF MALE THIS STATEMENT WILL EXECUTE
+                        // IF IT IS MALE THIS STATEMENT WILL EXECUTE
                         if (_genderPosition == 0) {
                           //tagret calorie
                           targetCalorie = (10 * currentWeight) +
@@ -172,14 +166,20 @@ class _FirstPage extends State<FirstPage> {
                               (5 * age) +
                               5;
 
+                          // TAGETCALLORIE == 1400
+
                           /// checking whether user wants to gain or lose weight
                           if (_userGoalPosition == 0) {
+                            // 1
                             finalBmr = targetCalorie + (kg2 * 500);
+                            //FINAL = 1400 + (1*500)
+                            // FINAL = 1900
                           } else {
                             finalBmr = targetCalorie - (kg2 * 500);
+                            // 1400 - 500
                           }
                         }
-                        // IF FEMALE THIS STATEMENT WILL EXECUTE
+                        // IF IT IS FEMALE THIS STATEMENT WILL EXECUTE
                         else {
                           //tagret calorie
                           targetCalorie = (10 * currentWeight) +
@@ -264,8 +264,9 @@ class _FirstPage extends State<FirstPage> {
             Expanded(
               child: ListView.builder(
                 itemCount: getGender.length,
-                scrollDirection: Axis.vertical,
+                // scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
+                  // isSelect = true;
                   bool isSelect = (index == _genderPosition);
                   return InkWell(
                     onTap: () {
@@ -275,23 +276,30 @@ class _FirstPage extends State<FirstPage> {
                       });
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(vertical: (margin! / 2)),
+                      margin: EdgeInsets.symmetric(
+                        vertical: (margin! / 2),
+                      ),
                       padding: EdgeInsets.symmetric(
-                          horizontal: (margin!), vertical: (margin!)),
+                        horizontal: (margin!),
+                        vertical: (margin!),
+                      ),
                       decoration: BoxDecoration(
-                          color: isSelect ? primaryColor : Colors.transparent,
-                          borderRadius: BorderRadius.all(Radius.circular(
-                              getScreenPercentSize(context, 1.5))),
-                          border: Border.all(
-                              color: isSelect
-                                  ? Colors.transparent
-                                  : subTextColor.withOpacity(0.1),
-                              width: 1.5)),
+                        color: isSelect ? primaryColor : Colors.transparent,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            getScreenPercentSize(context, 1.5),
+                          ),
+                        ),
+                        border: Border.all(
+                            color: isSelect
+                                ? Colors.transparent
+                                : subTextColor.withOpacity(0.1),
+                            width: 1.5),
+                      ),
                       child: Row(
                         children: [
                           Image.asset(
-                            ConstantData.assetsPath +
-                                getGender[index].subTitle!,
+                            ConstantData.assetsPath + getGender[index].subTitle!,
                             height: getScreenPercentSize(context, 8),
                           ),
                           SizedBox(
@@ -339,7 +347,7 @@ class _FirstPage extends State<FirstPage> {
               child: NumberPicker(
                 value: age,
                 itemHeight: getScreenPercentSize(context, 12),
-                minValue: 19,
+                minValue: 18,
                 maxValue: 50,
                 textStyle: TextStyle(
                     fontSize: getScreenPercentSize(context, 5),
@@ -353,6 +361,7 @@ class _FirstPage extends State<FirstPage> {
                 haptics: true,
                 onChanged: (value) => setState(() {
                   age = value;
+                  debugPrint(age.toString());
                 }),
               ),
             )
@@ -596,9 +605,7 @@ class _FirstPage extends State<FirstPage> {
                       ),
                       child: Row(
                         children: [
-                          Icon(FontAwesomeIcons.weightHanging,
-                              color:
-                                  (isSelect) ? Colors.black54 : Colors.black26),
+                          Icon(FontAwesomeIcons.weightHanging,color:(isSelect) ? Colors.black54 : Colors.black26),
                           SizedBox(
                             width: margin,
                           ),
@@ -684,8 +691,7 @@ class _FirstPage extends State<FirstPage> {
                       child: Row(
                         children: [
                           FaIcon(icons[index],
-                              color:
-                                  (isSelect) ? Colors.black54 : Colors.black26),
+                              color:(isSelect) ? Colors.black54 : Colors.black26),
                           SizedBox(
                             width: margin,
                           ),
@@ -806,7 +812,7 @@ class _FirstPage extends State<FirstPage> {
           fontFamily: ConstantData.fontFamily,
           fontWeight: FontWeight.w500),
       decoration: InputDecoration(
-        fillColor: Colors.red,
+
         filled: false,
         hintText: "0",
         border: InputBorder.none,

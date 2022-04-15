@@ -39,7 +39,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PageController pageController = PageController();
-  int page = 0;
+  int page = 0; // HomeSreen
 
   @override
   void initState() {
@@ -75,6 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
     wenId,
     thuId
   ];
+
+
+  /// meals = [[1,2,3],[4,3,7]];
 
   getData() async {
     if (widget.dailyPlans.hashCode == 2011) {
@@ -143,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else {
       calories = [
+        widget.dailyPlans!.week!.friday!.nutrients!.calories!,
         widget.dailyPlans!.week!.friday!.nutrients!.calories!,
         widget.dailyPlans!.week!.saturday!.nutrients!.calories!,
         widget.dailyPlans!.week!.sunday!.nutrients!.calories!,
@@ -280,6 +284,7 @@ class DailyMealsPlan extends StatefulWidget {
 }
 
 class _DailyMealsPlanState extends State<DailyMealsPlan> {
+
   save() async {
     List<String> myListOfStrings =
         trackCalorie.map((i) => i.toString()).toList();
@@ -429,11 +434,9 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                             },
                             onTap: () {
                               if (widget.mealsTime[index].breakfast == true) {
-                                trackCalorie[index] +=
-                                    (widget.calories[index] / 3);
+                                trackCalorie[index] += (widget.calories[index] / 3);
                                 save();
                                 setState(() {});
-                                debugPrint(trackCalorie.toString());
                                 widget.mealsTime[index].breakfast = false;
                               } else {
                                 showSnackBar(

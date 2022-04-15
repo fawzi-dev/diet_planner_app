@@ -55,13 +55,9 @@ class LoginItems extends StatefulWidget {
 }
 
 class _LoginItemsState extends State<LoginItems> {
-  bool obscuredText = true;
-
-  late String isGoogle;
-
   @override
   void initState() {
-    isGoogle = '';
+
     super.initState();
   }
 
@@ -95,9 +91,8 @@ class _LoginItemsState extends State<LoginItems> {
 
   @override
   Widget build(BuildContext context) {
-    // print('The value of boolean is : ' + obscuredText.toString());
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+
       backgroundColor: Colors.green.shade100.withOpacity(0.3),
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -117,7 +112,7 @@ class _LoginItemsState extends State<LoginItems> {
                 builder: (ctx, constraints) => Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   height: deviceScreenHeight(context) * .6,
-                  width: deviceScreenWidth(context) * 9,
+                  width: deviceScreenWidth(context),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -160,28 +155,7 @@ class _LoginItemsState extends State<LoginItems> {
   }
 }
 
-class SignUpButton extends StatelessWidget {
-  const SignUpButton({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text('Don\'t have an account? '),
-          Text(
-            'Sign Up',
-            style: signUp,
-          )
-        ],
-      ),
-    );
-  }
-}
 
 // ignore: must_be_immutable
 class OtherSignInOption extends StatelessWidget {

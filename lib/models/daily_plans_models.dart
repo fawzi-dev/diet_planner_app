@@ -3,6 +3,7 @@ class DailyPlans {
 
   DailyPlans({this.week});
 
+
   DailyPlans.fromJson(Map<String, dynamic> json) {
     week = json['week'] != null ? Week.fromJson(json['week']) : null;
   }
@@ -35,21 +36,13 @@ class Week {
       this.sunday});
 
   Week.fromJson(Map<String, dynamic> json) {
-    monday =
-        json['monday'] != null ? Day.fromJson(json['monday']) : null;
-    tuesday =
-        json['tuesday'] != null ? Day.fromJson(json['tuesday']) : null;
-    wednesday = json['wednesday'] != null
-        ? Day.fromJson(json['wednesday'])
-        : null;
-    thursday =
-        json['thursday'] != null ? Day.fromJson(json['thursday']) : null;
-    friday =
-        json['friday'] != null ? Day.fromJson(json['friday']) : null;
-    saturday =
-        json['saturday'] != null ? Day.fromJson(json['saturday']) : null;
-    sunday =
-        json['sunday'] != null ? Day.fromJson(json['sunday']) : null;
+    monday =  json['monday'] != null ? Day.fromJson(json['monday']) : null;
+    tuesday = json['tuesday'] != null ? Day.fromJson(json['tuesday']) : null;
+    wednesday = json['wednesday'] != null ? Day.fromJson(json['wednesday']) : null;
+    thursday = json['thursday'] != null ? Day.fromJson(json['thursday']) : null;
+    friday = json['friday'] != null ? Day.fromJson(json['friday']) : null;
+    saturday = json['saturday'] != null ? Day.fromJson(json['saturday']) : null;
+    sunday = json['sunday'] != null ? Day.fromJson(json['sunday']) : null;
   }
 
   Map<String, dynamic> toJson() {

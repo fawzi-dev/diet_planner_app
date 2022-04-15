@@ -13,7 +13,7 @@ import '../utils/constant_widget.dart';
 import '../utils/size_config.dart';
 
 class CreatePlanPage extends StatefulWidget {
-  final int? bmr;
+  final int? bmr; // 1898
 
   const CreatePlanPage({Key? key, this.bmr}) : super(key: key);
   @override
@@ -23,6 +23,7 @@ class CreatePlanPage extends StatefulWidget {
 }
 
 class _CreatePlanPage extends State<CreatePlanPage> {
+
   Future<bool> _requestPop() {
     if (Platform.isIOS) {
       exit(0);
@@ -75,10 +76,9 @@ class _CreatePlanPage extends State<CreatePlanPage> {
                 ),
                 TweenAnimationBuilder<double>(
                   tween: Tween<double>(begin: 0.0, end: 1),
-                  duration: const Duration(seconds: 7),
+                  duration: const Duration(seconds: 4),
                   onEnd: () async {
-                    DailyPlans dailyPlans = await ApiService.instance
-                        .generateMealsPlans(targetCalories: widget.bmr!);
+                    DailyPlans dailyPlans = await ApiService.instance.generateMealsPlans(targetCalories: widget.bmr!);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

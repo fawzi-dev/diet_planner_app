@@ -38,11 +38,7 @@ void main() async {
 
   // Intializing SharedPreference & and getting data
   await PrefData.init();
-  // isCreatePlan = PrefData.getIsCreatePlan();
-  // isSignedIn = PrefData.getIsSignedIn() ?? false;
   isFirstPage = PrefData.getIsFirstTime() ?? 0;
-  // isIntro = PrefData.getIsIntro() ?? true;
-
   // END ________________________________________________________
 
   // If user already input their data will direct them to the homescreen
@@ -79,32 +75,3 @@ void main() async {
   );
 }
 
-
-// //
-// class HomeMain extends StatefulWidget {
-//   const HomeMain({Key? key}) : super(key: key);
-
-//   @override
-//   State<HomeMain> createState() => _HomeMainState();
-// }
-
-// class _HomeMainState extends State<HomeMain> {
-  
-
-//   @override
-//   void initState() {
-//     // ignore: todo
-//     // TODO: implement initState
-//     super.initState();
-    
-//   }
-
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//      ,
-      // body: ,
-//     );
-//   }
-// }

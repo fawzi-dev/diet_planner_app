@@ -32,6 +32,8 @@ Widget getPrimaryAppBarIcon() {
   );
 }
 
+
+
 Widget getCalorieLabel(String text, BoxConstraints constraints) {
   return Text(
     text,

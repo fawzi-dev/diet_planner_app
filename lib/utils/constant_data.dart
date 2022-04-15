@@ -5,10 +5,7 @@ import 'package:intl/intl.dart';
 import 'size_config.dart';
 
 Color lightPink = const Color(0xFFFBE8EA);
-
 Color primaryColor = "#32a83e".toColor();
-// Color primaryColor = "#288E2E".toColor();
-// Color primaryColor = "#2EA34A".toColor();
 Color primaryDarkColor = "#117328".toColor();
 Color accentColor = "#E83D35".toColor();
 Color backgroundColor = "#F0F4F7".toColor();
@@ -18,8 +15,7 @@ Color cellColor = "#E4E6ED".toColor();
 Color disableIconColor = Colors.black;
 Color subTextColor = "#1E1F1F".toColor();
 
-var gradientColors =
-    LinearGradient(colors: [primaryColor, "#F65375".toColor()]);
+var gradientColors =  LinearGradient(colors: [primaryColor, "#F65375".toColor()]);
 
 class ConstantData {
   static String fontFamily = "OpenSans";

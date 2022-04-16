@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "467603377873-glkeplh7hie8oo79b163g4sg86hatq7b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tzb.diet_planner_app",
+            "certificate_hash": "39eb1a3f59761a1da9cca8b052db619f270a40f8"
+          }
+        },
+        {
           "client_id": "467603377873-p5735opcpubeuu1ssbpftjg3aevh6uav.apps.googleusercontent.com",
           "client_type": 3
         }

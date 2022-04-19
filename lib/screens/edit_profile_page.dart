@@ -23,9 +23,8 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePage extends State<EditProfilePage> {
-  late String name;
-
-  var user;
+  late String name; // Anony
+  var user; // Gmail
 
   @override
   void initState() {
@@ -111,6 +110,7 @@ class _EditProfilePage extends State<EditProfilePage> {
                               TextAlign.center,
                               FontWeight.w600,
                               constraints.maxHeight * 0.05)
+                      // if(...){....} else{...}
                           : getBoldTextWidget(
                               name,
                               Colors.black45,

@@ -72,7 +72,7 @@ class _CreatePlanPage extends State<CreatePlanPage> {
                 SizedBox(
                   height: headerHeight,
                   child: getTextWidget('Your BMR is ${widget.bmr} kCal',
-                      textColor, TextAlign.center, FontWeight.w600, 28),
+                      textColor, TextAlign.center, FontWeight.w600, MediaQuery.of(context).size.height*0.038)
                 ),
                 TweenAnimationBuilder<double>(
                   tween: Tween<double>(begin: 0.0, end: 1),

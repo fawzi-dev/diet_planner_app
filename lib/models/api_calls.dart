@@ -15,7 +15,7 @@ class ApiService {
   //Add base URL for the spoonacular API, endpoint and API Key as a constant
   final String _baseURL = "api.spoonacular.com";
   // ignore: constant_identifier_names
-  static const String API_KEY = "61f7f072649243ab892b1cfcb8f8ce81";
+  static const String API_KEY = "c126e1c0ab36478ab13732a7048615f0";
 
   // an async function to create  diet based on (targetCalorie) BMR
 

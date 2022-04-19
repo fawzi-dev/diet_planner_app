@@ -32,7 +32,16 @@ Widget getPrimaryAppBarIcon() {
   );
 }
 
-
+Widget getDay(int day,BoxConstraints constraints){
+  return Text(
+    'Day ${day+1}',
+    style: TextStyle(
+      fontSize: constraints.maxHeight*0.025,
+      fontFamily: 'Roboto-Medium',
+      color:const Color(0xB31E1E1E),
+    ),
+  );
+}
 
 Widget getCalorieLabel(String text, BoxConstraints constraints) {
   return Text(

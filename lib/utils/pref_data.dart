@@ -16,9 +16,12 @@ class PrefData {
   static Future setDailyCalorie(List<String> tracking) async =>
       await _preferences?.setStringList(number, tracking);
 
+
+
+
   static List<String>? getDailyCalorie() => _preferences?.getStringList(number);
 
-  //  Set if user enters the app for the first time
+  //  Set if user enters the app for the first time 3
   static setIsFirstTime(int num) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt(isIntKey, num);
@@ -34,7 +37,7 @@ class PrefData {
 
   static double? getCalorie() => _preferences?.getDouble(keyCalorie);
 
-  /// get anonymous user
+  /// get anonymous user // Fawzi
   static setIsAnony(String isFace) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(isAnony, isFace);

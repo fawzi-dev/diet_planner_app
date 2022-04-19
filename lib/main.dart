@@ -16,10 +16,8 @@ import 'models/api_calls.dart';
 import 'utils/colors.dart';
 import 'utils/pref_data.dart';
 
-// bool? isCreatePlan = true;
-// bool? isSignedIn;
+
 int? isFirstPage;
-// bool? isIntro;
 double? calorie;
 
 void main() async {

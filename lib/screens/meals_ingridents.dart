@@ -37,14 +37,13 @@ class _DishDetailPage extends State<DishDetailPage> {
   late List<String>? unit;
   late List<double>? value;
 
-  getIngrident() async {
+  getIngredient() async {
     Ingredients ingredients;
     ingredients = await ApiService.instance.getIngridents(id: widget.id);
     for (var element in ingredients.ingredients!) {
       name!.add(element.name!);
       unit!.add(element.amount!.metric!.unit!);
       value!.add(element.amount!.metric!.value!);
-
     }
     setState(() {});
   }
@@ -55,7 +54,7 @@ class _DishDetailPage extends State<DishDetailPage> {
     unit = [];
     value = [];
     super.initState();
-    getIngrident();
+    getIngredient();
   }
 
   @override
@@ -180,15 +179,12 @@ class _DishDetailPage extends State<DishDetailPage> {
     double size = getScreenPercentSize(context, 1);
     // double size = getScreenPercentSize(context, 2.8);
 
-    return
-    
-
-        ListView.builder(
+    return ListView.builder(
       shrinkWrap: true,
       padding: EdgeInsets.only(top: (margin / 2)),
       // padding: EdgeInsets.symmetric(vertical: (margin / 2)),
       itemCount: list.length,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.symmetric(vertical: margin / 2),

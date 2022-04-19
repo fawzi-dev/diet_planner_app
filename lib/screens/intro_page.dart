@@ -157,6 +157,7 @@ class _IntroPage extends State<IntroPage> {
                               controller.jumpToPage(_position);
                               setState(() {});
                             } else {
+                              // 1
                               PrefData.setIsFirstTime(1);
                               Navigator.of(context).pop(true);
                               Navigator.push(

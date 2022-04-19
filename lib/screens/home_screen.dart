@@ -76,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
     thuId
   ];
 
-
   /// meals = [[1,2,3],[4,3,7]];
 
   getData() async {
@@ -189,6 +188,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        selectedLabelStyle:
+            TextStyle(fontSize: MediaQuery.of(context).size.height * 0.020,fontWeight: FontWeight.bold),
+        unselectedLabelStyle:
+            TextStyle(fontSize: MediaQuery.of(context).size.height * 0.017),
         selectedItemColor: statusBar,
         onTap: (currentPage) async {
           animateToPageMethod(currentPage);
@@ -198,13 +201,25 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
               activeIcon: SvgPicture.asset('assets/navIcon/a-home.svg',
+                  height: MediaQuery.of(context).size.height * 0.045,
+                  width: MediaQuery.of(context).size.width * 0.045,
                   color: statusBar),
-              icon: SvgPicture.asset('assets/navIcon/home.svg'),
+              icon: SvgPicture.asset(
+                'assets/navIcon/home.svg',
+                height: MediaQuery.of(context).size.height * 0.04,
+                width: MediaQuery.of(context).size.width * 0.04,
+              ),
               label: 'Home'),
           BottomNavigationBarItem(
               activeIcon: SvgPicture.asset('assets/navIcon/a-profile.svg',
+                  height: MediaQuery.of(context).size.height * 0.045,
+                  width: MediaQuery.of(context).size.width * 0.045,
                   color: statusBar),
-              icon: SvgPicture.asset('assets/navIcon/profile.svg'),
+              icon: SvgPicture.asset(
+                'assets/navIcon/profile.svg',
+                height: MediaQuery.of(context).size.height * 0.04,
+                width: MediaQuery.of(context).size.width * 0.04,
+              ),
               label: 'Profile')
         ],
       ),
@@ -284,7 +299,6 @@ class DailyMealsPlan extends StatefulWidget {
 }
 
 class _DailyMealsPlanState extends State<DailyMealsPlan> {
-
   save() async {
     List<String> myListOfStrings =
         trackCalorie.map((i) => i.toString()).toList();
@@ -397,17 +411,14 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                       children: [
                         SvgPicture.asset(
                           'assets/icons/ios_arrow_left.svg',
-                          height: 15,
-                          width: 15,
+                          height: constraints.maxHeight * 0.020,
+                          width: constraints.maxWidth * 0.020,
                         ),
-                        Text(
-                          'Day ${index + 1}',
-                          style: dateAndTime,
-                        ),
+                        getDay(index, constraints),
                         SvgPicture.asset(
                           'assets/icons/ios_arrow_right.svg',
-                          height: 15,
-                          width: 15,
+                          height: constraints.maxHeight * 0.020,
+                          width: constraints.maxWidth * 0.020,
                         ),
                       ],
                     ),
@@ -434,7 +445,8 @@ class _DailyMealsPlanState extends State<DailyMealsPlan> {
                             },
                             onTap: () {
                               if (widget.mealsTime[index].breakfast == true) {
-                                trackCalorie[index] += (widget.calories[index] / 3);
+                                trackCalorie[index] +=
+                                    (widget.calories[index] / 3);
                                 save();
                                 setState(() {});
                                 widget.mealsTime[index].breakfast = false;

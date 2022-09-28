@@ -2,6 +2,8 @@
 
 A new Flutter application.
 
+![diet_planer](https://user-images.githubusercontent.com/84202263/192808440-310bca39-71f0-4c6e-8b75-a827b246b05e.gif)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

@@ -2,7 +2,7 @@
 
 A new Flutter application.
 
-![diet_planer](https://user-images.githubusercontent.com/84202263/192808440-310bca39-71f0-4c6e-8b75-a827b246b05e.gif)
+![diett](https://user-images.githubusercontent.com/84202263/192809653-34ae5b78-4578-43bd-ad8e-20f35786b0e9.gif)
 
 ## Getting Started
 

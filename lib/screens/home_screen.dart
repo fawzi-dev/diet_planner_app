@@ -188,8 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle:
-            TextStyle(fontSize: MediaQuery.of(context).size.height * 0.020,fontWeight: FontWeight.bold),
+        selectedLabelStyle: TextStyle(
+            fontSize: MediaQuery.of(context).size.height * 0.020,
+            fontWeight: FontWeight.bold),
         unselectedLabelStyle:
             TextStyle(fontSize: MediaQuery.of(context).size.height * 0.017),
         selectedItemColor: statusBar,

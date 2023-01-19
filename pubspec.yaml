@@ -38,7 +38,7 @@ dependencies:
   intl: ^0.17.0  # bo nusin barwar
   progress_indicator: ^0.2.0
   ai_progress: ^2.0.0
-  syncfusion_flutter_gauges: ^19.4.47
+  syncfusion_flutter_gauges: ^20.4.43
   shared_preferences: ^2.0.13
   http: ^0.13.4
   numberpicker: ^2.1.1
